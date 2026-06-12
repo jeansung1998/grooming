@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="미용 체크">
+<title>애견 미용 체크리스트</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { width: 100%; height: 100%; overflow-x: hidden; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif; background: #f5f5f7; padding-bottom: env(safe-area-inset-bottom, 20px); }
+  .header { background: #fff; padding: 12px 16px 10px; padding-top: calc(12px + env(safe-area-inset-top, 0px)); border-bottom: 0.5px solid #e0e0e0; position: sticky; top: 0; z-index: 10; width: 100%; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .header h1 { font-size: 18px; font-weight: 600; color: #1a1a1a; }
+  .badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #e8f0fe; color: #3b5bdb; font-weight: 500; }
+  .dog-info { display: flex; gap: 8px; }
+  .dog-info input { flex: 1; font-size: 14px; height: 38px; border-radius: 10px; border: 1px solid #e0e0e0; padding: 0 12px; background: #f5f5f7; color: #1a1a1a; outline: none; min-width: 0; width: 100%; }
+  .dog-info input:focus { border-color: #3b5bdb; background: #fff; }
+  .body-wrap { padding: 12px 16px 0; width: 100%; }
+  .health-box { background: #f0f4ff; border: 1px solid #d0d9ff; border-radius: 12px; padding: 10px 12px; margin-bottom: 12px; }
+  .health-label { font-size: 11px; font-weight: 600; color: #3b5bdb; margin-bottom: 6px; }
+  .health-box textarea { width: 100%; font-size: 13px; padding: 6px 8px; border: 1px solid #c5d0ff; border-radius: 8px; background: #fff; color: #1a1a1a; resize: none; height: 64px; font-family: inherit; line-height: 1.5; outline: none; }
+  .progress-wrap { margin-bottom: 10px; }
+  .progress-bar { height: 5px; background: #e0e0e0; border-radius: 3px; margin-bottom: 5px; }
+  .progress-fill { height: 5px; background: #34c759; border-radius: 3px; transition: width 0.3s; }
+  .progress-text { font-size: 12px; color: #666; }
+  .section-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .checklist { display: flex; flex-direction: column; gap: 5px; width: 100%; }
+  .item-wrap { border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06); width: 100%; }
+  .item-wrap.panel-open .item { border-radius: 0; border-bottom: none; }
+  .item { display: flex; align-items: center; gap: 8px; padding: 12px 12px; background: #fff; border: 1px solid #ebebeb; border-radius: 12px; width: 100%; }
+  .item.done { background: #f9f9f9; }
+  .item.done .item-name { color: #aaa; text-decoration: line-through; }
+  .item.crossed { background: #fff5f5; opacity: 0.7; }
+  .item.crossed .item-name { color: #bbb; text-decoration: line-through; }
+  .item-check { width: 26px; height: 26px; border-radius: 50%; border: 2px solid #d0d0d0; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; }
+  .item.done .item-check { background: #34c759; border-color: #34c759; }
+  .item.done .item-check svg { stroke: #fff; }
+  .item-check svg { stroke: transparent; width: 14px; height: 14px; stroke-width: 2.5; fill: none; }
+  .item-num { font-size: 12px; color: #bbb; width: 14px; flex-shrink: 0; text-align: center; }
+  .item-name { font-size: 15px; color: #1a1a1a; flex: 1; min-width: 0; }
+  .memo-btn { background: none; border: none; cursor: pointer; color: #bbb; padding: 4px; border-radius: 6px; position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; flex-shrink: 0; }
+  .memo-btn svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 1.8; fill: none; }
+  .memo-count { position: absolute; top: 0; right: 0; min-width: 15px; height: 15px; background: #ff3b30; color: #fff; font-size: 9px; font-weight: 700; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 0 3px; }
+  .cross-btn { width: 30px; height: 30px; border: 1.5px solid #d0d0d0; border-radius: 6px; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .cross-btn svg { width: 14px; height: 14px; stroke: #999; stroke-width: 2.5; fill: none; }
+  .item.crossed .cross-btn { border-color: #ff3b30; background: #fff0f0; }
+  .item.crossed .cross-btn svg { stroke: #ff3b30; }
+  .delete-btn { width: 30px; height: 30px; border: 1.5px solid #d0d0d0; border-radius: 6px; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .delete-btn svg { width: 14px; height: 14px; stroke: #999; stroke-width: 2; fill: none; }
+  .memo-panel { display: none; border: 1px solid #ebebeb; border-top: none; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; background: #fff; padding: 10px 12px 12px; }
+  .memo-panel.open { display: block; }
+  .skip-label { font-size: 11px; color: #ff3b30; font-weight: 600; margin-bottom: 5px; }
+  .memo-panel textarea { width: 100%; font-size: 13px; padding: 8px 10px; border: 1px solid #e0e0e0; border-radius: 8px; background: #f9f9f9; color: #1a1a1a; resize: none; height: 64px; font-family: inherit; line-height: 1.5; outline: none; }
+  .memo-panel textarea:focus { border-color: #3b5bdb; background: #fff; }
+  .memo-actions { display: flex; gap: 8px; margin-top: 8px; }
+  .memo-done-btn { flex: 1; height: 36px; font-size: 14px; font-weight: 600; border-radius: 8px; border: none; color: #fff; background: #34c759; cursor: pointer; }
+  .memo-cancel-btn { height: 36px; padding: 0 14px; font-size: 14px; border-radius: 8px; border: 1px solid #e0e0e0; color: #666; background: #f5f5f7; cursor: pointer; }
+  .add-area { display: flex; gap: 8px; margin-top: 12px; width: 100%; }
+  .add-area input { flex: 1; font-size: 14px; height: 42px; border-radius: 10px; border: 1px solid #e0e0e0; padding: 0 12px; background: #fff; color: #1a1a1a; outline: none; min-width: 0; }
+  .add-area input:focus { border-color: #3b5bdb; }
+  .add-btn { height: 42px; padding: 0 16px; font-size: 14px; font-weight: 600; border-radius: 10px; border: none; background: #3b5bdb; color: #fff; cursor: pointer; flex-shrink: 0; }
+  .bottom-btns { display: flex; gap: 8px; margin-top: 10px; margin-bottom: 20px; }
+  .reset-btn { flex: 1; height: 42px; font-size: 14px; border-radius: 10px; border: 1.5px solid #ff3b30; color: #ff3b30; background: #fff; cursor: pointer; font-weight: 500; }
+  .save-btn { flex: 1; height: 42px; font-size: 14px; border-radius: 10px; border: none; background: #34c759; color: #fff; cursor: pointer; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <h1>✂️ 기본 트림</h1>
+    <span class="badge">🐾 애견미용</span>
+  </div>
+  <div class="dog-info">
+    <input id="dog-name" type="text" placeholder="강아지 이름" />
+    <input id="dog-breed" type="text" placeholder="견종" />
+  </div>
+</div>
+
+<div class="body-wrap">
+  <div class="health-box">
+    <div class="health-label">💚 건강 상태 메모</div>
+    <textarea id="health-memo" placeholder="예) 피부 트러블, 귀 염증, 예민한 부위, 특이사항 등..."></textarea>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="progress-text" id="progress-text">0 / 10 완료</div>
+  </div>
+  <div class="section-label">미용 순서</div>
+  <div class="checklist" id="checklist"></div>
+  <div class="add-area">
+    <input id="add-input" type="text" placeholder="항목 추가..." />
+    <button class="add-btn" onclick="addItem()">+ 추가</button>
+  </div>
+  <div class="bottom-btns">
+    <button class="reset-btn" onclick="resetAll()">↺ 초기화</button>
+    <button class="save-btn" id="save-btn" onclick="saveData()">저장</button>
+  </div>
+</div>
+
+<script>
+const FIXED_NAMES = ['귀털','목욕','드라이','귀청소','항문','생식기 털','배털','발바닥','발톱','닭발 정리'];
+const DEFAULT_ITEMS = FIXED_NAMES.map(name => ({ name, done: false, memo: '', crossed: false, fixed: true }));
+let items = [];
+
+const checkIcon = `<svg viewBox="0 0 14 14"><polyline points="2,7 6,11 12,3"/></svg>`;
+const notesIcon = `<svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="14" rx="2"/><line x1="7" y1="7" x2="13" y2="7"/><line x1="7" y1="10" x2="13" y2="10"/><line x1="7" y1="13" x2="10" y2="13"/></svg>`;
+const xIcon = `<svg viewBox="0 0 14 14"><line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/></svg>`;
+const trashIcon = `<svg viewBox="0 0 20 20"><polyline points="5,7 5,17 15,17 15,7"/><line x1="3" y1="7" x2="17" y2="7"/><line x1="8" y1="7" x2="8" y2="4"/><line x1="12" y1="7" x2="12" y2="4"/><line x1="8" y1="4" x2="12" y2="4"/></svg>`;
+
+function memoCount(text) {
+  if (!text || !text.trim()) return 0;
+  return text.trim().split('\n').filter(l => l.trim()).length;
+}
+
+function loadData() {
+  try {
+    const saved = localStorage.getItem('grooming_pwa_v1');
+    if (saved) {
+      const d = JSON.parse(saved);
+      items = (d.items || DEFAULT_ITEMS.map(i => ({...i}))).map(i => ({...i, _open: false, _isSkip: false}));
+      document.getElementById('dog-name').value = d.dogName || '';
+      document.getElementById('dog-breed').value = d.dogBreed || '';
+      document.getElementById('health-memo').value = d.healthMemo || '';
+    } else {
+      items = DEFAULT_ITEMS.map(i => ({...i, _open: false, _isSkip: false}));
+    }
+  } catch(e) {
+    items = DEFAULT_ITEMS.map(i => ({...i, _open: false, _isSkip: false}));
+  }
+  render();
+}
+
+function saveData() {
+  try {
+    localStorage.setItem('grooming_pwa_v1', JSON.stringify({
+      items: items.map(({_open, _isSkip, ...r}) => r),
+      dogName: document.getElementById('dog-name').value,
+      dogBreed: document.getElementById('dog-breed').value,
+      healthMemo: document.getElementById('health-memo').value,
+    }));
+    const btn = document.getElementById('save-btn');
+    btn.textContent = '✓ 저장됨';
+    setTimeout(() => { btn.textContent = '저장'; }, 1400);
+  } catch(e) {}
+}
+
+function render() {
+  const list = document.getElementById('checklist');
+  list.innerHTML = '';
+  items.forEach((item, idx) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'item-wrap' + (item._open ? ' panel-open' : '');
+    const cnt = memoCount(item.memo);
+    const row = document.createElement('div');
+    let cls = 'item';
+    if (item.done) cls += ' done';
+    if (item.crossed) cls += ' crossed';
+    row.className = cls;
+    row.innerHTML = `
+      <span class="item-num">${idx+1}</span>
+      <div class="item-check">${checkIcon}</div>
+      <span class="item-name">${item.name}</span>
+      <button class="memo-btn" aria-label="메모">${notesIcon}${cnt > 0 ? `<span class="memo-count">${cnt}</span>` : ''}</button>
+      ${item.fixed
+        ? `<button class="cross-btn" aria-label="생략">${xIcon}</button>`
+        : `<button class="delete-btn" aria-label="삭제">${trashIcon}</button>`}
+    `;
+    row.querySelector('.item-check').addEventListener('click', e => { e.stopPropagation(); toggle(idx); });
+    row.querySelector('.item-name').addEventListener('click', () => toggle(idx));
+    row.querySelector('.memo-btn').addEventListener('click', e => { e.stopPropagation(); openPanel(idx, false); });
+    if (item.fixed) {
+      row.querySelector('.cross-btn').addEventListener('click', e => { e.stopPropagation(); toggleCross(idx); });
+    } else {
+      row.querySelector('.delete-btn').addEventListener('click', e => { e.stopPropagation(); deleteItem(idx); });
+    }
+    const panel = document.createElement('div');
+    panel.className = 'memo-panel' + (item._open ? ' open' : '');
+    if (item._isSkip) {
+      const sl = document.createElement('div');
+      sl.className = 'skip-label';
+      sl.textContent = '⚠️ 생략 사유';
+      panel.appendChild(sl);
+    }
+    const ta = document.createElement('textarea');
+    ta.placeholder = item._isSkip ? '생략 사유를 입력하세요...' : '메모 입력 (줄마다 1개로 카운트)';
+    ta.value = item.memo || '';
+    const origMemo = item.memo || '';
+    ta.addEventListener('input', e => { items[idx].memo = e.target.value; });
+    const acts = document.createElement('div');
+    acts.className = 'memo-actions';
+    const doneBtn = document.createElement('button');
+    doneBtn.className = 'memo-done-btn';
+    doneBtn.textContent = '완료';
+    doneBtn.addEventListener('click', () => closePanel(idx));
+    const cancelBtn = document.createElement('button');
+    cancelBtn.className = 'memo-cancel-btn';
+    cancelBtn.textContent = '취소';
+    cancelBtn.addEventListener('click', () => {
+      items[idx].memo = origMemo;
+      if (item._isSkip) items[idx].crossed = false;
+      closePanel(idx);
+    });
+    acts.appendChild(doneBtn);
+    acts.appendChild(cancelBtn);
+    panel.appendChild(ta);
+    panel.appendChild(acts);
+    wrap.appendChild(row);
+    wrap.appendChild(panel);
+    list.appendChild(wrap);
+    if (item._open) setTimeout(() => ta.focus(), 50);
+  });
+  const fixed = items.filter(i => i.fixed);
+  const done = fixed.filter(i => i.done).length;
+  const pct = fixed.length ? Math.round(done / fixed.length * 100) : 0;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = `${done} / ${fixed.length} 완료`;
+}
+
+function toggle(idx) {
+  if (items[idx].crossed) return;
+  items[idx].done = !items[idx].done;
+  render();
+}
+function toggleCross(idx) {
+  if (!items[idx].crossed) {
+    items[idx].crossed = true;
+    items[idx].done = false;
+    openPanel(idx, true);
+  } else {
+    items[idx].crossed = false;
+    items[idx]._open = false;
+    items[idx]._isSkip = false;
+    render();
+  }
+}
+function openPanel(idx, isSkip) {
+  items.forEach((it, i) => { if (i !== idx) { it._open = false; it._isSkip = false; } });
+  items[idx]._open = true;
+  items[idx]._isSkip = isSkip;
+  render();
+}
+function closePanel(idx) {
+  items[idx]._open = false;
+  items[idx]._isSkip = false;
+  render();
+}
+function addItem() {
+  const inp = document.getElementById('add-input');
+  const name = inp.value.trim();
+  if (!name) return;
+  items.push({ name, done: false, memo: '', crossed: false, fixed: false, _open: false, _isSkip: false });
+  inp.value = '';
+  render();
+}
+function deleteItem(idx) { items.splice(idx, 1); render(); }
+function resetAll() {
+  if (confirm('체크 상태를 모두 초기화할까요?')) {
+    items.forEach(i => { i.done = false; i.memo = ''; i._open = false; i.crossed = false; i._isSkip = false; });
+    document.getElementById('health-memo').value = '';
+    render();
+  }
+}
+document.getElementById('add-input').addEventListener('keydown', e => { if (e.key === 'Enter') addItem(); });
+loadData();
+</script>
+</body>
+</html>
