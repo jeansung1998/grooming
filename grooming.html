@@ -2,273 +2,580 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="미용 체크">
 <title>애견 미용 체크리스트</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif; background: #f5f5f7; min-height: 100vh; padding-bottom: 40px; }
-  .header { background: #fff; padding: 16px 16px 12px; border-bottom: 0.5px solid #e0e0e0; position: sticky; top: 0; z-index: 10; }
-  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-  .header h1 { font-size: 18px; font-weight: 600; color: #1a1a1a; }
-  .badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #e8f0fe; color: #3b5bdb; font-weight: 500; }
-  .dog-info { display: flex; gap: 8px; margin-bottom: 10px; }
-  .dog-info input { flex: 1; font-size: 14px; height: 36px; border-radius: 10px; border: 1px solid #e0e0e0; padding: 0 12px; background: #f5f5f7; color: #1a1a1a; outline: none; }
-  .dog-info input:focus { border-color: #3b5bdb; background: #fff; }
-  .health-box { background: #f0f4ff; border: 1px solid #d0d9ff; border-radius: 12px; padding: 10px 12px; margin: 0 16px 12px; }
-  .health-label { font-size: 11px; font-weight: 600; color: #3b5bdb; margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
-  .health-box textarea { width: 100%; font-size: 13px; padding: 6px 8px; border: 1px solid #c5d0ff; border-radius: 8px; background: #fff; color: #1a1a1a; resize: none; height: 64px; font-family: inherit; line-height: 1.5; outline: none; }
-  .progress-wrap { padding: 0 16px 12px; }
-  .progress-bar { height: 5px; background: #e0e0e0; border-radius: 3px; margin-bottom: 5px; }
-  .progress-fill { height: 5px; background: #34c759; border-radius: 3px; transition: width 0.3s; }
-  .progress-text { font-size: 12px; color: #666; }
-  .section-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.05em; padding: 0 16px; margin-bottom: 6px; }
-  .checklist { padding: 0 16px; display: flex; flex-direction: column; gap: 5px; }
-  .item-wrap { border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-  .item-wrap.panel-open .item { border-radius: 0; border-bottom: none; }
-  .item { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: #fff; border: 1px solid #ebebeb; border-radius: 12px; cursor: default; user-select: none; }
-  .item.done { background: #f9f9f9; }
-  .item.done .item-name { color: #aaa; text-decoration: line-through; }
-  .item.crossed { background: #fff5f5; opacity: 0.7; }
-  .item.crossed .item-name { color: #bbb; text-decoration: line-through; }
-  .item-check { width: 24px; height: 24px; border-radius: 50%; border: 2px solid #d0d0d0; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; }
-  .item.done .item-check { background: #34c759; border-color: #34c759; }
-  .item.done .item-check svg { stroke: #fff; }
-  .item-check svg { stroke: transparent; width: 13px; height: 13px; stroke-width: 2.5; fill: none; }
-  .item-num { font-size: 12px; color: #bbb; width: 16px; flex-shrink: 0; text-align: center; }
-  .item-name { font-size: 15px; color: #1a1a1a; flex: 1; }
-  .memo-btn { background: none; border: none; cursor: pointer; color: #bbb; padding: 4px; border-radius: 6px; position: relative; display: flex; align-items: center; justify-content: center; min-width: 32px; min-height: 32px; }
-  .memo-btn svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 1.8; fill: none; }
-  .memo-count { position: absolute; top: 0px; right: 0px; min-width: 15px; height: 15px; background: #ff3b30; color: #fff; font-size: 9px; font-weight: 700; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 0 3px; }
-  .cross-btn { width: 28px; height: 28px; border: 1.5px solid #d0d0d0; border-radius: 6px; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .cross-btn svg { width: 14px; height: 14px; stroke: #999; stroke-width: 2.5; fill: none; }
-  .item.crossed .cross-btn { border-color: #ff3b30; background: #fff0f0; }
-  .item.crossed .cross-btn svg { stroke: #ff3b30; }
-  .delete-btn { width: 28px; height: 28px; border: 1.5px solid #d0d0d0; border-radius: 6px; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .delete-btn svg { width: 14px; height: 14px; stroke: #999; stroke-width: 2; fill: none; }
-  .memo-panel { display: none; border: 1px solid #ebebeb; border-top: none; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; background: #fff; padding: 10px 14px 12px; }
-  .memo-panel.open { display: block; }
-  .skip-label { font-size: 11px; color: #ff3b30; font-weight: 600; margin-bottom: 5px; display: flex; align-items: center; gap: 4px; }
-  .memo-panel textarea { width: 100%; font-size: 13px; padding: 8px 10px; border: 1px solid #e0e0e0; border-radius: 8px; background: #f9f9f9; color: #1a1a1a; resize: none; height: 64px; font-family: inherit; line-height: 1.5; outline: none; }
-  .memo-panel textarea:focus { border-color: #3b5bdb; background: #fff; }
-  .memo-actions { display: flex; gap: 8px; margin-top: 8px; }
-  .memo-done-btn { flex: 1; height: 34px; font-size: 13px; font-weight: 600; border-radius: 8px; border: none; color: #fff; background: #34c759; cursor: pointer; }
-  .memo-cancel-btn { height: 34px; padding: 0 14px; font-size: 13px; border-radius: 8px; border: 1px solid #e0e0e0; color: #666; background: #f5f5f7; cursor: pointer; }
-  .add-area { display: flex; gap: 8px; padding: 12px 16px 0; }
-  .add-area input { flex: 1; font-size: 14px; height: 40px; border-radius: 10px; border: 1px solid #e0e0e0; padding: 0 12px; background: #fff; color: #1a1a1a; outline: none; }
-  .add-area input:focus { border-color: #3b5bdb; }
-  .add-btn { height: 40px; padding: 0 14px; font-size: 14px; font-weight: 600; border-radius: 10px; border: none; background: #3b5bdb; color: #fff; cursor: pointer; }
-  .bottom-btns { display: flex; gap: 8px; padding: 10px 16px 0; }
-  .reset-btn { flex: 1; height: 40px; font-size: 14px; border-radius: 10px; border: 1.5px solid #ff3b30; color: #ff3b30; background: #fff; cursor: pointer; font-weight: 500; }
-  .save-btn { flex: 1; height: 40px; font-size: 14px; border-radius: 10px; border: none; background: #34c759; color: #fff; cursor: pointer; font-weight: 600; }
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{width:100%;height:100%;overflow-x:hidden;background:#f5f5f7;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;}
+body{padding-bottom:env(safe-area-inset-bottom,20px);}
+
+/* SCREENS */
+.screen{display:none;width:100%;min-height:100vh;}
+.screen.active{display:block;}
+
+/* HEADER */
+.header{background:#fff;padding:12px 14px 10px;padding-top:calc(12px + env(safe-area-inset-top,0px));border-bottom:0.5px solid #e0e0e0;position:sticky;top:0;z-index:10;}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.header-title{font-size:17px;font-weight:600;color:#1a1a1a;}
+.badge{font-size:11px;padding:3px 8px;border-radius:20px;background:#e8f0fe;color:#3b5bdb;font-weight:500;}
+
+/* TIMER */
+.timer-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.timer-label{font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.04em;}
+.timer-times{display:flex;align-items:center;gap:6px;}
+.time-btn{background:#f5f5f7;border:1px solid #e0e0e0;border-radius:8px;padding:4px 10px;font-size:15px;font-weight:600;color:#1a1a1a;cursor:pointer;min-width:60px;text-align:center;}
+.time-btn.active{background:#e8f0fe;border-color:#3b5bdb;color:#3b5bdb;}
+.timer-sep{font-size:14px;color:#888;}
+.time-picker{background:#fff;border:1px solid #e0e0e0;border-radius:14px;margin:0 14px 10px;padding:12px 14px;display:none;}
+.time-picker.open{display:block;}
+.picker-label{font-size:11px;color:#888;font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.04em;}
+.picker-row{display:flex;align-items:center;gap:8px;}
+.picker-col{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;}
+.picker-col span{font-size:11px;color:#888;}
+.picker-val{font-size:22px;font-weight:600;color:#1a1a1a;min-width:48px;text-align:center;}
+.picker-up,.picker-dn{width:36px;height:28px;border:1px solid #e0e0e0;border-radius:8px;background:#f5f5f7;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.picker-colon{font-size:22px;font-weight:600;color:#888;padding-top:8px;}
+.picker-confirm{margin-top:10px;width:100%;height:36px;background:#3b5bdb;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;}
+
+/* DOG INFO */
+.dog-info{display:flex;gap:6px;}
+.dog-info input{flex:1 1 0;width:0;min-width:0;font-size:13px;height:36px;border-radius:10px;border:1px solid #e0e0e0;padding:0 10px;background:#f5f5f7;color:#1a1a1a;outline:none;}
+.dog-info input:focus{border-color:#3b5bdb;background:#fff;}
+
+/* BODY */
+.body-wrap{padding:12px 14px 0;}
+.health-box{background:#f0f4ff;border:1px solid #d0d9ff;border-radius:12px;padding:10px 12px;margin-bottom:12px;}
+.health-label{font-size:11px;font-weight:600;color:#3b5bdb;margin-bottom:6px;}
+.health-box textarea{width:100%;font-size:13px;padding:6px 8px;border:1px solid #c5d0ff;border-radius:8px;background:#fff;color:#1a1a1a;resize:none;height:60px;font-family:inherit;line-height:1.5;outline:none;}
+.prog-bar{height:5px;background:#e0e0e0;border-radius:3px;margin-bottom:5px;}
+.prog-fill{height:5px;background:#34c759;border-radius:3px;transition:width 0.3s;}
+.prog-text{font-size:12px;color:#666;margin-bottom:10px;}
+.sec-label{font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;}
+
+/* ITEMS */
+.checklist{display:flex;flex-direction:column;gap:5px;}
+.item-wrap{border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.05);}
+.item-wrap.panel-open .item{border-radius:0;border-bottom:none;}
+.item{display:flex;align-items:center;gap:5px;padding:10px 10px;background:#fff;border:1px solid #ebebeb;border-radius:12px;touch-action:none;}
+.item.dragging{opacity:0.4;}
+.item.drag-over{border:2px dashed #3b5bdb;background:#f0f4ff;}
+.drag-handle{color:#ccc;cursor:grab;font-size:16px;flex-shrink:0;padding:0 2px;}
+.item-num{font-size:12px;color:#bbb;width:13px;text-align:center;flex-shrink:0;}
+.check-circle{width:24px;height:24px;border-radius:50%;border:2px solid #d0d0d0;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all 0.15s;}
+.check-circle.done{background:#34c759;border-color:#34c759;}
+.check-circle svg{stroke:transparent;width:12px;height:12px;stroke-width:2.5;fill:none;}
+.check-circle.done svg{stroke:#fff;}
+.item-name{font-size:14px;color:#1a1a1a;flex:1;min-width:0;}
+.status-btns{display:flex;gap:3px;flex-shrink:0;}
+.sb{width:28px;height:28px;border-radius:6px;border:1.5px solid #e0e0e0;background:#f9f9f9;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;color:#ccc;transition:all 0.12s;}
+.sb.o.sel{background:#34c759;border-color:#34c759;color:#fff;}
+.sb.t.sel{background:#f59f00;border-color:#f59f00;color:#fff;}
+.sb.x.sel{background:#ff3b30;border-color:#ff3b30;color:#fff;}
+.memo-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:#ccc;border:1.5px solid #e0e0e0;border-radius:6px;cursor:pointer;flex-shrink:0;background:none;position:relative;}
+.memo-btn svg{width:15px;height:15px;stroke:currentColor;stroke-width:1.8;fill:none;}
+.memo-count{position:absolute;top:-3px;right:-3px;min-width:14px;height:14px;background:#ff3b30;color:#fff;font-size:9px;font-weight:700;border-radius:7px;display:flex;align-items:center;justify-content:center;padding:0 3px;}
+.memo-panel{display:none;border:1px solid #ebebeb;border-top:none;border-bottom-left-radius:12px;border-bottom-right-radius:12px;background:#fff;padding:8px 12px 10px;}
+.memo-panel.open{display:block;}
+.skip-label{font-size:11px;color:#ff3b30;font-weight:600;margin-bottom:5px;}
+.memo-panel textarea{width:100%;font-size:13px;padding:8px 10px;border:1px solid #e0e0e0;border-radius:8px;background:#f9f9f9;color:#1a1a1a;resize:none;height:60px;font-family:inherit;line-height:1.5;outline:none;}
+.memo-actions{display:flex;gap:8px;margin-top:6px;}
+.memo-done-btn{flex:1;height:32px;font-size:13px;font-weight:600;border-radius:8px;border:none;color:#fff;background:#34c759;cursor:pointer;}
+.memo-cancel-btn{height:32px;padding:0 12px;font-size:13px;border-radius:8px;border:1px solid #e0e0e0;color:#666;background:#f5f5f7;cursor:pointer;}
+
+/* BOTTOM BTNS */
+.bottom-btns{display:flex;gap:8px;margin-top:12px;margin-bottom:24px;}
+.list-btn{flex:1;height:44px;font-size:14px;border-radius:10px;border:1.5px solid #3b5bdb;color:#3b5bdb;background:#fff;cursor:pointer;font-weight:500;}
+.save-btn{flex:1;height:44px;font-size:14px;border-radius:10px;border:none;background:#34c759;color:#fff;cursor:pointer;font-weight:600;}
+
+/* LIST SCREEN */
+.list-header{background:#fff;padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top,0px));border-bottom:0.5px solid #e0e0e0;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10;}
+.back-btn{background:none;border:none;font-size:15px;color:#3b5bdb;cursor:pointer;padding:4px 0;font-weight:500;}
+.list-title{font-size:17px;font-weight:600;color:#1a1a1a;flex:1;}
+.list-body{padding:12px 14px;}
+.list-empty{text-align:center;color:#aaa;font-size:14px;padding:60px 0;}
+.record-card{background:#fff;border:1px solid #ebebeb;border-radius:12px;padding:14px;margin-bottom:8px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.05);}
+.record-card:active{background:#f5f5f7;}
+.record-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.record-name{font-size:15px;font-weight:600;color:#1a1a1a;}
+.record-date{font-size:12px;color:#888;}
+.record-meta{display:flex;align-items:center;gap:8px;}
+.record-time{font-size:12px;color:#3b5bdb;background:#e8f0fe;padding:2px 8px;border-radius:10px;}
+.record-progress{font-size:12px;color:#34c759;background:#e6f7ec;padding:2px 8px;border-radius:10px;}
+.record-del{background:none;border:none;color:#ccc;font-size:18px;cursor:pointer;padding:4px;margin-left:4px;}
+.record-del:active{color:#ff3b30;}
+
+/* DETAIL SCREEN */
+.detail-header{background:#fff;padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top,0px));border-bottom:0.5px solid #e0e0e0;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10;}
+.detail-title{font-size:16px;font-weight:600;color:#1a1a1a;flex:1;}
+.edit-toggle{background:none;border:1px solid #3b5bdb;border-radius:8px;color:#3b5bdb;font-size:13px;padding:4px 10px;cursor:pointer;}
+.detail-body{padding:12px 14px 24px;}
+.detail-section{margin-bottom:14px;}
+.detail-label{font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:6px;}
+.detail-val{font-size:14px;color:#1a1a1a;background:#fff;border:1px solid #ebebeb;border-radius:10px;padding:10px 12px;}
+.detail-item{display:flex;align-items:center;gap:6px;padding:10px 10px;background:#fff;border:1px solid #ebebeb;border-radius:12px;margin-bottom:5px;}
+.detail-item-num{font-size:12px;color:#bbb;width:13px;text-align:center;flex-shrink:0;}
+.detail-check{width:22px;height:22px;border-radius:50%;border:2px solid #d0d0d0;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.detail-check.done{background:#34c759;border-color:#34c759;}
+.detail-check svg{stroke:transparent;width:11px;height:11px;stroke-width:2.5;fill:none;}
+.detail-check.done svg{stroke:#fff;}
+.detail-item-name{font-size:14px;color:#1a1a1a;flex:1;}
+.detail-status{width:28px;height:28px;border-radius:6px;border:1.5px solid #e0e0e0;background:#f9f9f9;font-size:13px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#ccc;}
+.detail-status.o{background:#34c759;border-color:#34c759;color:#fff;}
+.detail-status.t{background:#f59f00;border-color:#f59f00;color:#fff;}
+.detail-status.x{background:#ff3b30;border-color:#ff3b30;color:#fff;}
+.detail-memo-text{font-size:12px;color:#666;padding:4px 10px 4px 42px;font-style:italic;}
+.detail-save-btn{width:100%;height:44px;background:#34c759;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;margin-top:16px;}
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-top">
-    <h1>✂️ 기본 트림</h1>
-    <span class="badge">🐾 애견미용</span>
+<!-- MAIN SCREEN -->
+<div class="screen active" id="screen-main">
+  <div class="header">
+    <div class="timer-row">
+      <div class="timer-label">작업 시간</div>
+      <div class="timer-times">
+        <button class="time-btn" id="btn-start" onclick="togglePicker('start')">09:00</button>
+        <span class="timer-sep">~</span>
+        <button class="time-btn" id="btn-end" onclick="togglePicker('end')">10:00</button>
+      </div>
+    </div>
+    <div class="dog-info">
+      <input id="dog-name" type="text" placeholder="강아지 이름" />
+      <input id="dog-breed" type="text" placeholder="견종" />
+    </div>
   </div>
-  <div class="dog-info">
-    <input id="dog-name" type="text" placeholder="강아지 이름" />
-    <input id="dog-breed" type="text" placeholder="견종" />
+
+  <div class="time-picker" id="picker">
+    <div class="picker-label" id="picker-label">시작 시간</div>
+    <div class="picker-row">
+      <div class="picker-col">
+        <span>시</span>
+        <button class="picker-up" onclick="adj('h',1)">▲</button>
+        <div class="picker-val" id="val-h">09</div>
+        <button class="picker-dn" onclick="adj('h',-1)">▼</button>
+      </div>
+      <div class="picker-colon">:</div>
+      <div class="picker-col">
+        <span>분 (10분 단위)</span>
+        <button class="picker-up" onclick="adj('m',10)">▲</button>
+        <div class="picker-val" id="val-m">00</div>
+        <button class="picker-dn" onclick="adj('m',-10)">▼</button>
+      </div>
+    </div>
+    <button class="picker-confirm" onclick="confirmTime()">확인</button>
+  </div>
+
+  <div class="body-wrap">
+    <div class="health-box">
+      <div class="health-label">💚 건강 상태 메모</div>
+      <textarea id="health-memo" placeholder="예) 피부 트러블, 귀 염증, 예민한 부위, 특이사항 등..."></textarea>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <div class="prog-text" id="prog-text">0 / 11 완료</div>
+    <div class="sec-label">미용 순서</div>
+    <div class="checklist" id="checklist"></div>
+    <div class="bottom-btns">
+      <button class="list-btn" onclick="showList()">📋 목록</button>
+      <button class="save-btn" onclick="saveRecord()">저장</button>
+    </div>
   </div>
 </div>
 
-<div class="health-box">
-  <div class="health-label">💚 건강 상태 메모</div>
-  <textarea id="health-memo" placeholder="예) 피부 트러블, 귀 염증, 예민한 부위, 특이사항 등..."></textarea>
+<!-- LIST SCREEN -->
+<div class="screen" id="screen-list">
+  <div class="list-header">
+    <button class="back-btn" onclick="showMain()">← 뒤로</button>
+    <div class="list-title">작업 목록</div>
+  </div>
+  <div class="list-body" id="list-body"></div>
 </div>
 
-<div class="progress-wrap">
-  <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
-  <div class="progress-text" id="progress-text">0 / 10 완료</div>
-</div>
-
-<div class="section-label">미용 순서</div>
-<div class="checklist" id="checklist"></div>
-
-<div class="add-area">
-  <input id="add-input" type="text" placeholder="항목 추가..." />
-  <button class="add-btn" onclick="addItem()">+ 추가</button>
-</div>
-<div class="bottom-btns">
-  <button class="reset-btn" onclick="resetAll()">↺ 초기화</button>
-  <button class="save-btn" id="save-btn" onclick="saveData()">저장</button>
+<!-- DETAIL SCREEN -->
+<div class="screen" id="screen-detail">
+  <div class="detail-header">
+    <button class="back-btn" onclick="showList()">← 뒤로</button>
+    <div class="detail-title" id="detail-title">작업 상세</div>
+    <button class="edit-toggle" id="edit-toggle" onclick="toggleEdit()">수정</button>
+  </div>
+  <div class="detail-body" id="detail-body"></div>
 </div>
 
 <script>
-const FIXED_NAMES = ['귀털','목욕','드라이','귀청소','항문','생식기 털','배털','발바닥','발톱','닭발 정리'];
-const DEFAULT_ITEMS = FIXED_NAMES.map(name => ({ name, done: false, memo: '', crossed: false, fixed: true }));
-let items = [];
+const DEFAULT_NAMES = ['귀털','목욕','블로어','드라이','귀청소','항문','생식기 털','배털','발','발재확인','닭발 정리'];
 
-const checkIcon = `<svg viewBox="0 0 14 14"><polyline points="2,7 6,11 12,3"/></svg>`;
-const notesIcon = `<svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="14" rx="2"/><line x1="7" y1="7" x2="13" y2="7"/><line x1="7" y1="10" x2="13" y2="10"/><line x1="7" y1="13" x2="10" y2="13"/></svg>`;
-const xIcon = `<svg viewBox="0 0 14 14"><line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/></svg>`;
-const trashIcon = `<svg viewBox="0 0 20 20"><polyline points="5,7 5,17 15,17 15,7"/><line x1="3" y1="7" x2="17" y2="7"/><line x1="8" y1="7" x2="8" y2="4"/><line x1="12" y1="7" x2="12" y2="4"/><line x1="8" y1="4" x2="12" y2="4"/></svg>`;
+let items = DEFAULT_NAMES.map(n => ({name:n, done:false, status:null, memo:'', _open:false}));
+let times = {start:{h:9,m:0}, end:{h:10,m:0}};
+let pickerCur = 'start';
+let pickerOpen = false;
+let dragSrcIdx = null;
+let records = [];
+let currentDetailIdx = null;
+let editMode = false;
 
-function memoCount(text) {
-  if (!text || !text.trim()) return 0;
-  return text.trim().split('\n').filter(l => l.trim()).length;
+function pad(n){return String(n).padStart(2,'0');}
+function fmt(t){return pad(t.h)+':'+pad(t.m);}
+function today(){const d=new Date();return `${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())}`;}
+function memoCount(text){if(!text||!text.trim())return 0;return text.trim().split('\n').filter(l=>l.trim()).length;}
+
+// --- TIMER ---
+function togglePicker(type){
+  if(pickerOpen && pickerCur===type){closePicker();return;}
+  pickerCur=type; pickerOpen=true;
+  document.getElementById('picker-label').textContent = type==='start'?'시작 시간':'종료 시간';
+  document.getElementById('val-h').textContent = pad(times[type].h);
+  document.getElementById('val-m').textContent = pad(times[type].m);
+  document.getElementById('picker').classList.add('open');
+  document.getElementById('btn-start').classList.toggle('active',type==='start');
+  document.getElementById('btn-end').classList.toggle('active',type==='end');
+}
+function closePicker(){
+  pickerOpen=false;
+  document.getElementById('picker').classList.remove('open');
+  document.getElementById('btn-start').classList.remove('active');
+  document.getElementById('btn-end').classList.remove('active');
+}
+function adj(unit,dir){
+  if(unit==='h') times[pickerCur].h=(times[pickerCur].h+dir+24)%24;
+  else times[pickerCur].m=(times[pickerCur].m+dir+60)%60;
+  document.getElementById('val-h').textContent=pad(times[pickerCur].h);
+  document.getElementById('val-m').textContent=pad(times[pickerCur].m);
+}
+function confirmTime(){
+  document.getElementById('btn-start').textContent=fmt(times.start);
+  document.getElementById('btn-end').textContent=fmt(times.end);
+  closePicker();
 }
 
-function loadData() {
-  try {
-    const saved = localStorage.getItem('grooming_pwa_v1');
-    if (saved) {
-      const d = JSON.parse(saved);
-      items = (d.items || DEFAULT_ITEMS.map(i => ({...i}))).map(i => ({...i, _open: false, _isSkip: false}));
-      document.getElementById('dog-name').value = d.dogName || '';
-      document.getElementById('dog-breed').value = d.dogBreed || '';
-      document.getElementById('health-memo').value = d.healthMemo || '';
-    } else {
-      items = DEFAULT_ITEMS.map(i => ({...i, _open: false, _isSkip: false}));
-    }
-  } catch(e) {
-    items = DEFAULT_ITEMS.map(i => ({...i, _open: false, _isSkip: false}));
-  }
-  render();
-}
-
-function saveData() {
-  try {
-    localStorage.setItem('grooming_pwa_v1', JSON.stringify({
-      items: items.map(({_open, _isSkip, ...r}) => r),
-      dogName: document.getElementById('dog-name').value,
-      dogBreed: document.getElementById('dog-breed').value,
-      healthMemo: document.getElementById('health-memo').value,
-    }));
-    const btn = document.getElementById('save-btn');
-    btn.textContent = '✓ 저장됨';
-    setTimeout(() => { btn.textContent = '저장'; }, 1400);
-  } catch(e) {}
-}
-
-function render() {
+// --- RENDER MAIN ---
+function render(){
   const list = document.getElementById('checklist');
-  list.innerHTML = '';
-  items.forEach((item, idx) => {
+  list.innerHTML='';
+  items.forEach((item,idx)=>{
     const wrap = document.createElement('div');
-    wrap.className = 'item-wrap' + (item._open ? ' panel-open' : '');
+    wrap.className='item-wrap'+(item._open?' panel-open':'');
 
     const cnt = memoCount(item.memo);
     const row = document.createElement('div');
-    let cls = 'item';
-    if (item.done) cls += ' done';
-    if (item.crossed) cls += ' crossed';
-    row.className = cls;
-    row.innerHTML = `
+    row.className='item';
+    row.draggable=true;
+    row.dataset.idx=idx;
+    row.innerHTML=`
+      <span class="drag-handle">⠿</span>
       <span class="item-num">${idx+1}</span>
-      <div class="item-check">${checkIcon}</div>
+      <div class="check-circle${item.done?' done':''}">
+        <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+      </div>
       <span class="item-name">${item.name}</span>
-      <button class="memo-btn" aria-label="메모">${notesIcon}${cnt > 0 ? `<span class="memo-count">${cnt}</span>` : ''}</button>
-      ${item.fixed
-        ? `<button class="cross-btn" aria-label="생략">${xIcon}</button>`
-        : `<button class="delete-btn" aria-label="삭제">${trashIcon}</button>`}
+      <div class="status-btns">
+        <button class="sb o${item.status==='o'?' sel':''}">○</button>
+        <button class="sb t${item.status==='t'?' sel':''}">△</button>
+        <button class="sb x${item.status==='x'?' sel':''}">✕</button>
+      </div>
+      <button class="memo-btn">
+        <svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="14" rx="2"/><line x1="7" y1="7" x2="13" y2="7"/><line x1="7" y1="10" x2="13" y2="10"/><line x1="7" y1="13" x2="10" y2="13"/></svg>
+        ${cnt>0?`<span class="memo-count">${cnt}</span>`:''}
+      </button>
     `;
-    row.querySelector('.item-check').addEventListener('click', e => { e.stopPropagation(); toggle(idx); });
-    row.querySelector('.item-name').addEventListener('click', () => toggle(idx));
-    row.querySelector('.memo-btn').addEventListener('click', e => { e.stopPropagation(); openPanel(idx, false); });
-    if (item.fixed) {
-      row.querySelector('.cross-btn').addEventListener('click', e => { e.stopPropagation(); toggleCross(idx); });
-    } else {
-      row.querySelector('.delete-btn').addEventListener('click', e => { e.stopPropagation(); deleteItem(idx); });
-    }
 
-    const panel = document.createElement('div');
-    panel.className = 'memo-panel' + (item._open ? ' open' : '');
-    if (item._isSkip) {
-      const sl = document.createElement('div');
-      sl.className = 'skip-label';
-      sl.textContent = '⚠️ 생략 사유';
-      panel.appendChild(sl);
-    }
-    const ta = document.createElement('textarea');
-    ta.placeholder = item._isSkip ? '생략 사유를 입력하세요...' : '메모 입력 (줄마다 1개로 카운트)';
-    ta.value = item.memo || '';
-    const origMemo = item.memo || '';
-    ta.addEventListener('input', e => { items[idx].memo = e.target.value; });
+    row.querySelector('.check-circle').addEventListener('click',()=>{items[idx].done=!items[idx].done;updateProgress();render();});
+    const sbs=row.querySelectorAll('.sb');
+    ['o','t','x'].forEach((s,i)=>sbs[i].addEventListener('click',()=>{items[idx].status=items[idx].status===s?null:s;render();}));
+    row.querySelector('.memo-btn').addEventListener('click',e=>{e.stopPropagation();openMemo(idx);});
 
-    const acts = document.createElement('div');
-    acts.className = 'memo-actions';
-    const doneBtn = document.createElement('button');
-    doneBtn.className = 'memo-done-btn';
-    doneBtn.textContent = '완료';
-    doneBtn.addEventListener('click', () => closePanel(idx));
-    const cancelBtn = document.createElement('button');
-    cancelBtn.className = 'memo-cancel-btn';
-    cancelBtn.textContent = '취소';
-    cancelBtn.addEventListener('click', () => {
-      items[idx].memo = origMemo;
-      if (item._isSkip) items[idx].crossed = false;
-      closePanel(idx);
+    // drag desktop
+    row.addEventListener('dragstart',()=>{dragSrcIdx=idx;setTimeout(()=>row.classList.add('dragging'),0);});
+    row.addEventListener('dragend',()=>{row.classList.remove('dragging');document.querySelectorAll('.item').forEach(el=>el.classList.remove('drag-over'));});
+    row.addEventListener('dragover',e=>{e.preventDefault();row.classList.add('drag-over');});
+    row.addEventListener('dragleave',()=>row.classList.remove('drag-over'));
+    row.addEventListener('drop',e=>{e.preventDefault();row.classList.remove('drag-over');if(dragSrcIdx!==null&&dragSrcIdx!==idx){const m=items.splice(dragSrcIdx,1)[0];items.splice(idx,0,m);dragSrcIdx=null;render();}});
+
+    // drag touch
+    let tStartY=0,tIdx=null;
+    row.addEventListener('touchstart',e=>{tStartY=e.touches[0].clientY;tIdx=idx;row.classList.add('dragging');},{passive:true});
+    row.addEventListener('touchmove',e=>{
+      e.preventDefault();
+      const els=document.elementsFromPoint(e.touches[0].clientX,e.touches[0].clientY);
+      const target=els.find(el=>el.classList.contains('item')&&el!==row);
+      document.querySelectorAll('.item').forEach(el=>el.classList.remove('drag-over'));
+      if(target)target.classList.add('drag-over');
+    },{passive:false});
+    row.addEventListener('touchend',e=>{
+      row.classList.remove('dragging');
+      const els=document.elementsFromPoint(e.changedTouches[0].clientX,e.changedTouches[0].clientY);
+      const target=els.find(el=>el.classList.contains('item')&&el!==row);
+      document.querySelectorAll('.item').forEach(el=>el.classList.remove('drag-over'));
+      if(target){const toIdx=+target.dataset.idx;const m=items.splice(tIdx,1)[0];items.splice(toIdx,0,m);}
+      tIdx=null;render();
     });
-    acts.appendChild(doneBtn);
-    acts.appendChild(cancelBtn);
-    panel.appendChild(ta);
-    panel.appendChild(acts);
-    wrap.appendChild(row);
-    wrap.appendChild(panel);
+
+    // memo panel
+    const panel = document.createElement('div');
+    panel.className='memo-panel'+(item._open?' open':'');
+    const origMemo=item.memo||'';
+    const ta=document.createElement('textarea');
+    ta.placeholder='메모 입력...';
+    ta.value=item.memo||'';
+    ta.addEventListener('input',e=>{items[idx].memo=e.target.value;});
+    const acts=document.createElement('div');
+    acts.className='memo-actions';
+    const doneBtn=document.createElement('button');
+    doneBtn.className='memo-done-btn';doneBtn.textContent='완료';
+    doneBtn.addEventListener('click',()=>closeMemo(idx));
+    const cancelBtn=document.createElement('button');
+    cancelBtn.className='memo-cancel-btn';cancelBtn.textContent='취소';
+    cancelBtn.addEventListener('click',()=>{items[idx].memo=origMemo;closeMemo(idx);});
+    acts.appendChild(doneBtn);acts.appendChild(cancelBtn);
+    panel.appendChild(ta);panel.appendChild(acts);
+    wrap.appendChild(row);wrap.appendChild(panel);
     list.appendChild(wrap);
-    if (item._open) setTimeout(() => ta.focus(), 50);
+    if(item._open)setTimeout(()=>ta.focus(),50);
   });
-
-  const fixed = items.filter(i => i.fixed);
-  const done = fixed.filter(i => i.done).length;
-  const pct = fixed.length ? Math.round(done / fixed.length * 100) : 0;
-  document.getElementById('progress-fill').style.width = pct + '%';
-  document.getElementById('progress-text').textContent = `${done} / ${fixed.length} 완료`;
+  updateProgress();
 }
 
-function toggle(idx) {
-  if (items[idx].crossed) return;
-  items[idx].done = !items[idx].done;
+function openMemo(idx){items.forEach((it,i)=>{if(i!==idx){it._open=false;}});items[idx]._open=!items[idx]._open;render();}
+function closeMemo(idx){items[idx]._open=false;render();}
+function updateProgress(){
+  const done=items.filter(i=>i.done).length;
+  document.getElementById('prog-fill').style.width=(done/items.length*100)+'%';
+  document.getElementById('prog-text').textContent=`${done} / ${items.length} 완료`;
+}
+
+// --- SAVE ---
+function saveRecord(){
+  const dogName=document.getElementById('dog-name').value.trim()||'이름없음';
+  const dogBreed=document.getElementById('dog-breed').value.trim()||'';
+  const healthMemo=document.getElementById('health-memo').value.trim();
+  const dateStr=today();
+  const sameDay=records.filter(r=>r.date===dateStr).length+1;
+  const record={
+    id: Date.now(),
+    date: dateStr,
+    seq: sameDay,
+    dogName, dogBreed, healthMemo,
+    timeStart: fmt(times.start),
+    timeEnd: fmt(times.end),
+    items: items.map(({_open,...rest})=>({...rest}))
+  };
+  records.unshift(record);
+  saveToStorage();
+  alert(`저장됐어요!\n${dateStr} - ${sameDay}번째 - ${dogName}`);
+  resetMain();
+}
+
+function resetMain(){
+  items=DEFAULT_NAMES.map(n=>({name:n,done:false,status:null,memo:'',_open:false}));
+  times={start:{h:9,m:0},end:{h:10,m:0}};
+  document.getElementById('dog-name').value='';
+  document.getElementById('dog-breed').value='';
+  document.getElementById('health-memo').value='';
+  document.getElementById('btn-start').textContent='09:00';
+  document.getElementById('btn-end').textContent='10:00';
+  closePicker();
   render();
 }
-function toggleCross(idx) {
-  if (!items[idx].crossed) {
-    items[idx].crossed = true;
-    items[idx].done = false;
-    openPanel(idx, true);
+
+// --- SCREENS ---
+function showMain(){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-main').classList.add('active');
+  render();
+}
+function showList(){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-list').classList.add('active');
+  renderList();
+}
+function showDetail(idx){
+  currentDetailIdx=idx;
+  editMode=false;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-detail').classList.add('active');
+  renderDetail();
+}
+
+// --- LIST ---
+function renderList(){
+  const body=document.getElementById('list-body');
+  if(records.length===0){body.innerHTML='<div class="list-empty">저장된 기록이 없어요</div>';return;}
+  body.innerHTML='';
+  records.forEach((r,idx)=>{
+    const done=r.items.filter(i=>i.done).length;
+    const card=document.createElement('div');
+    card.className='record-card';
+    card.innerHTML=`
+      <div class="record-top">
+        <div>
+          <div class="record-name">${r.dogName}${r.dogBreed?` · ${r.dogBreed}`:''}</div>
+          <div class="record-date">${r.date} · ${r.seq}번째</div>
+        </div>
+        <button class="record-del" data-idx="${idx}">🗑</button>
+      </div>
+      <div class="record-meta">
+        <span class="record-time">⏱ ${r.timeStart} ~ ${r.timeEnd}</span>
+        <span class="record-progress">✓ ${done}/${r.items.length}</span>
+      </div>
+    `;
+    card.addEventListener('click',e=>{if(!e.target.classList.contains('record-del'))showDetail(idx);});
+    card.querySelector('.record-del').addEventListener('click',e=>{
+      e.stopPropagation();
+      if(confirm('이 기록을 삭제할까요?')){records.splice(idx,1);saveToStorage();renderList();}
+    });
+    body.appendChild(card);
+  });
+}
+
+// --- DETAIL ---
+function renderDetail(){
+  const r=records[currentDetailIdx];
+  document.getElementById('detail-title').textContent=`${r.date} · ${r.dogName}`;
+  document.getElementById('edit-toggle').textContent=editMode?'완료':'수정';
+  const body=document.getElementById('detail-body');
+  body.innerHTML='';
+
+  // time
+  const timeDiv=document.createElement('div');
+  timeDiv.className='detail-section';
+  timeDiv.innerHTML=`<div class="detail-label">작업 시간</div>`;
+  if(editMode){
+    timeDiv.innerHTML+=`<div style="display:flex;gap:8px;align-items:center;">
+      <input type="text" value="${r.timeStart}" id="d-time-start" style="flex:1;min-width:0;font-size:14px;height:36px;border-radius:10px;border:1px solid #e0e0e0;padding:0 10px;background:#f5f5f7;color:#1a1a1a;outline:none;">
+      <span style="color:#888">~</span>
+      <input type="text" value="${r.timeEnd}" id="d-time-end" style="flex:1;min-width:0;font-size:14px;height:36px;border-radius:10px;border:1px solid #e0e0e0;padding:0 10px;background:#f5f5f7;color:#1a1a1a;outline:none;">
+    </div>`;
   } else {
-    items[idx].crossed = false;
-    items[idx]._open = false;
-    items[idx]._isSkip = false;
-    render();
+    timeDiv.innerHTML+=`<div class="detail-val">⏱ ${r.timeStart} ~ ${r.timeEnd}</div>`;
+  }
+  body.appendChild(timeDiv);
+
+  // dog info
+  const dogDiv=document.createElement('div');
+  dogDiv.className='detail-section';
+  dogDiv.innerHTML=`<div class="detail-label">강아지 정보</div>`;
+  if(editMode){
+    dogDiv.innerHTML+=`<div style="display:flex;gap:8px;">
+      <input type="text" value="${r.dogName}" id="d-dog-name" placeholder="이름" style="flex:1;min-width:0;font-size:13px;height:36px;border-radius:10px;border:1px solid #e0e0e0;padding:0 10px;background:#f5f5f7;color:#1a1a1a;outline:none;">
+      <input type="text" value="${r.dogBreed}" id="d-dog-breed" placeholder="견종" style="flex:1;min-width:0;font-size:13px;height:36px;border-radius:10px;border:1px solid #e0e0e0;padding:0 10px;background:#f5f5f7;color:#1a1a1a;outline:none;">
+    </div>`;
+  } else {
+    dogDiv.innerHTML+=`<div class="detail-val">${r.dogName}${r.dogBreed?` · ${r.dogBreed}`:''}</div>`;
+  }
+  body.appendChild(dogDiv);
+
+  // health memo
+  if(r.healthMemo||editMode){
+    const hDiv=document.createElement('div');
+    hDiv.className='detail-section';
+    hDiv.innerHTML=`<div class="detail-label">건강 상태 메모</div>`;
+    if(editMode){
+      hDiv.innerHTML+=`<textarea id="d-health" style="width:100%;font-size:13px;padding:8px 10px;border:1px solid #e0e0e0;border-radius:10px;background:#f5f5f7;color:#1a1a1a;resize:none;height:60px;font-family:inherit;outline:none;">${r.healthMemo}</textarea>`;
+    } else {
+      hDiv.innerHTML+=`<div class="detail-val">${r.healthMemo||'-'}</div>`;
+    }
+    body.appendChild(hDiv);
+  }
+
+  // items
+  const itemsDiv=document.createElement('div');
+  itemsDiv.className='detail-section';
+  itemsDiv.innerHTML=`<div class="detail-label">미용 순서</div>`;
+  r.items.forEach((item,i)=>{
+    const row=document.createElement('div');
+    row.className='detail-item';
+    if(editMode){
+      row.innerHTML=`
+        <span class="detail-item-num">${i+1}</span>
+        <div class="detail-check${item.done?' done':''}" data-i="${i}">
+          <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+        </div>
+        <span class="detail-item-name">${item.name}</span>
+        <div style="display:flex;gap:3px;">
+          <button class="sb o${item.status==='o'?' sel':''}" data-i="${i}" data-s="o">○</button>
+          <button class="sb t${item.status==='t'?' sel':''}" data-i="${i}" data-s="t">△</button>
+          <button class="sb x${item.status==='x'?' sel':''}" data-i="${i}" data-s="x">✕</button>
+        </div>
+      `;
+      row.querySelector('.detail-check').addEventListener('click',()=>{
+        records[currentDetailIdx].items[i].done=!records[currentDetailIdx].items[i].done;
+        renderDetail();
+      });
+      row.querySelectorAll('.sb').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          const s=btn.dataset.s;
+          records[currentDetailIdx].items[i].status=records[currentDetailIdx].items[i].status===s?null:s;
+          renderDetail();
+        });
+      });
+    } else {
+      const sClass=item.status||'';
+      const sText=item.status==='o'?'○':item.status==='t'?'△':item.status==='x'?'✕':'';
+      row.innerHTML=`
+        <span class="detail-item-num">${i+1}</span>
+        <div class="detail-check${item.done?' done':''}">
+          <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+        </div>
+        <span class="detail-item-name">${item.name}</span>
+        ${sText?`<div class="detail-status ${sClass}">${sText}</div>`:'<div class="detail-status"></div>'}
+      `;
+    }
+    itemsDiv.appendChild(row);
+    if(item.memo){
+      const mDiv=document.createElement('div');
+      mDiv.className='detail-memo-text';
+      mDiv.textContent='📝 '+item.memo;
+      itemsDiv.appendChild(mDiv);
+    }
+  });
+  body.appendChild(itemsDiv);
+
+  if(editMode){
+    const saveBtn=document.createElement('button');
+    saveBtn.className='detail-save-btn';
+    saveBtn.textContent='수정 저장';
+    saveBtn.addEventListener('click',saveDetail);
+    body.appendChild(saveBtn);
   }
 }
-function openPanel(idx, isSkip) {
-  items.forEach((it, i) => { if (i !== idx) { it._open = false; it._isSkip = false; } });
-  items[idx]._open = true;
-  items[idx]._isSkip = isSkip;
-  render();
+
+function toggleEdit(){
+  if(editMode){saveDetail();}
+  else{editMode=true;renderDetail();}
 }
-function closePanel(idx) {
-  items[idx]._open = false;
-  items[idx]._isSkip = false;
-  render();
+
+function saveDetail(){
+  const r=records[currentDetailIdx];
+  const ts=document.getElementById('d-time-start');
+  const te=document.getElementById('d-time-end');
+  const dn=document.getElementById('d-dog-name');
+  const db=document.getElementById('d-dog-breed');
+  const hm=document.getElementById('d-health');
+  if(ts)r.timeStart=ts.value;
+  if(te)r.timeEnd=te.value;
+  if(dn)r.dogName=dn.value;
+  if(db)r.dogBreed=db.value;
+  if(hm)r.healthMemo=hm.value;
+  saveToStorage();
+  editMode=false;
+  renderDetail();
 }
-function addItem() {
-  const inp = document.getElementById('add-input');
-  const name = inp.value.trim();
-  if (!name) return;
-  items.push({ name, done: false, memo: '', crossed: false, fixed: false, _open: false, _isSkip: false });
-  inp.value = '';
-  render();
+
+// --- STORAGE ---
+function saveToStorage(){
+  try{localStorage.setItem('grooming_records',JSON.stringify(records));}catch(e){}
 }
-function deleteItem(idx) { items.splice(idx, 1); render(); }
-function resetAll() {
-  if (confirm('체크 상태를 모두 초기화할까요?')) {
-    items.forEach(i => { i.done = false; i.memo = ''; i._open = false; i.crossed = false; i._isSkip = false; });
-    document.getElementById('health-memo').value = '';
-    render();
-  }
+function loadFromStorage(){
+  try{
+    const d=localStorage.getItem('grooming_records');
+    if(d)records=JSON.parse(d);
+  }catch(e){}
 }
-document.getElementById('add-input').addEventListener('keydown', e => { if (e.key === 'Enter') addItem(); });
-loadData();
+
+loadFromStorage();
+render();
 </script>
 </body>
 </html>
