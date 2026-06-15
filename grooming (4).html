@@ -11,18 +11,9 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{width:100%;height:100%;overflow-x:hidden;background:#f5f5f7;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;}
 body{padding-bottom:env(safe-area-inset-bottom,20px);}
-
-/* SCREENS */
 .screen{display:none;width:100%;min-height:100vh;}
 .screen.active{display:block;}
-
-/* HEADER */
 .header{background:#fff;padding:12px 14px 10px;padding-top:calc(12px + env(safe-area-inset-top,0px));border-bottom:0.5px solid #e0e0e0;position:sticky;top:0;z-index:10;}
-.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.header-title{font-size:17px;font-weight:600;color:#1a1a1a;}
-.badge{font-size:11px;padding:3px 8px;border-radius:20px;background:#e8f0fe;color:#3b5bdb;font-weight:500;}
-
-/* TIMER */
 .timer-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
 .timer-label{font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.04em;}
 .timer-times{display:flex;align-items:center;gap:6px;}
@@ -39,13 +30,9 @@ body{padding-bottom:env(safe-area-inset-bottom,20px);}
 .picker-up,.picker-dn{width:36px;height:28px;border:1px solid #e0e0e0;border-radius:8px;background:#f5f5f7;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .picker-colon{font-size:22px;font-weight:600;color:#888;padding-top:8px;}
 .picker-confirm{margin-top:10px;width:100%;height:36px;background:#3b5bdb;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;}
-
-/* DOG INFO */
 .dog-info{display:flex;gap:6px;}
 .dog-info input{flex:1 1 0;width:0;min-width:0;font-size:13px;height:36px;border-radius:10px;border:1px solid #e0e0e0;padding:0 10px;background:#f5f5f7;color:#1a1a1a;outline:none;}
 .dog-info input:focus{border-color:#3b5bdb;background:#fff;}
-
-/* BODY */
 .body-wrap{padding:12px 14px 0;}
 .health-box{background:#f0f4ff;border:1px solid #d0d9ff;border-radius:12px;padding:10px 12px;margin-bottom:12px;}
 .health-label{font-size:11px;font-weight:600;color:#3b5bdb;margin-bottom:6px;}
@@ -54,8 +41,6 @@ body{padding-bottom:env(safe-area-inset-bottom,20px);}
 .prog-fill{height:5px;background:#34c759;border-radius:3px;transition:width 0.3s;}
 .prog-text{font-size:12px;color:#666;margin-bottom:10px;}
 .sec-label{font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;}
-
-/* ITEMS */
 .checklist{display:flex;flex-direction:column;gap:5px;}
 .item-wrap{border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.05);}
 .item-wrap.panel-open .item{border-radius:0;border-bottom:none;}
@@ -79,18 +64,13 @@ body{padding-bottom:env(safe-area-inset-bottom,20px);}
 .memo-count{position:absolute;top:-3px;right:-3px;min-width:14px;height:14px;background:#ff3b30;color:#fff;font-size:9px;font-weight:700;border-radius:7px;display:flex;align-items:center;justify-content:center;padding:0 3px;}
 .memo-panel{display:none;border:1px solid #ebebeb;border-top:none;border-bottom-left-radius:12px;border-bottom-right-radius:12px;background:#fff;padding:8px 12px 10px;}
 .memo-panel.open{display:block;}
-.skip-label{font-size:11px;color:#ff3b30;font-weight:600;margin-bottom:5px;}
 .memo-panel textarea{width:100%;font-size:13px;padding:8px 10px;border:1px solid #e0e0e0;border-radius:8px;background:#f9f9f9;color:#1a1a1a;resize:none;height:60px;font-family:inherit;line-height:1.5;outline:none;}
 .memo-actions{display:flex;gap:8px;margin-top:6px;}
 .memo-done-btn{flex:1;height:32px;font-size:13px;font-weight:600;border-radius:8px;border:none;color:#fff;background:#34c759;cursor:pointer;}
 .memo-cancel-btn{height:32px;padding:0 12px;font-size:13px;border-radius:8px;border:1px solid #e0e0e0;color:#666;background:#f5f5f7;cursor:pointer;}
-
-/* BOTTOM BTNS */
 .bottom-btns{display:flex;gap:8px;margin-top:12px;margin-bottom:24px;}
 .list-btn{flex:1;height:44px;font-size:14px;border-radius:10px;border:1.5px solid #3b5bdb;color:#3b5bdb;background:#fff;cursor:pointer;font-weight:500;}
 .save-btn{flex:1;height:44px;font-size:14px;border-radius:10px;border:none;background:#34c759;color:#fff;cursor:pointer;font-weight:600;}
-
-/* LIST SCREEN */
 .list-header{background:#fff;padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top,0px));border-bottom:0.5px solid #e0e0e0;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10;}
 .back-btn{background:none;border:none;font-size:15px;color:#3b5bdb;cursor:pointer;padding:4px 0;font-weight:500;}
 .list-title{font-size:17px;font-weight:600;color:#1a1a1a;flex:1;}
@@ -106,8 +86,6 @@ body{padding-bottom:env(safe-area-inset-bottom,20px);}
 .record-progress{font-size:12px;color:#34c759;background:#e6f7ec;padding:2px 8px;border-radius:10px;}
 .record-del{background:none;border:none;color:#ccc;font-size:18px;cursor:pointer;padding:4px;margin-left:4px;}
 .record-del:active{color:#ff3b30;}
-
-/* DETAIL SCREEN */
 .detail-header{background:#fff;padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top,0px));border-bottom:0.5px solid #e0e0e0;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10;}
 .detail-title{font-size:16px;font-weight:600;color:#1a1a1a;flex:1;}
 .edit-toggle{background:none;border:1px solid #3b5bdb;border-radius:8px;color:#3b5bdb;font-size:13px;padding:4px 10px;cursor:pointer;}
@@ -131,8 +109,6 @@ body{padding-bottom:env(safe-area-inset-bottom,20px);}
 </style>
 </head>
 <body>
-
-<!-- MAIN SCREEN -->
 <div class="screen active" id="screen-main">
   <div class="header">
     <div class="timer-row">
@@ -148,7 +124,6 @@ body{padding-bottom:env(safe-area-inset-bottom,20px);}
       <input id="dog-breed" type="text" placeholder="견종" />
     </div>
   </div>
-
   <div class="time-picker" id="picker">
     <div class="picker-label" id="picker-label">시작 시간</div>
     <div class="picker-row">
@@ -168,7 +143,6 @@ body{padding-bottom:env(safe-area-inset-bottom,20px);}
     </div>
     <button class="picker-confirm" onclick="confirmTime()">확인</button>
   </div>
-
   <div class="body-wrap">
     <div class="health-box">
       <div class="health-label">💚 건강 상태 메모</div>
@@ -184,8 +158,6 @@ body{padding-bottom:env(safe-area-inset-bottom,20px);}
     </div>
   </div>
 </div>
-
-<!-- LIST SCREEN -->
 <div class="screen" id="screen-list">
   <div class="list-header">
     <button class="back-btn" onclick="showMain()">← 뒤로</button>
@@ -193,8 +165,6 @@ body{padding-bottom:env(safe-area-inset-bottom,20px);}
   </div>
   <div class="list-body" id="list-body"></div>
 </div>
-
-<!-- DETAIL SCREEN -->
 <div class="screen" id="screen-detail">
   <div class="detail-header">
     <button class="back-btn" onclick="showList()">← 뒤로</button>
@@ -203,379 +173,134 @@ body{padding-bottom:env(safe-area-inset-bottom,20px);}
   </div>
   <div class="detail-body" id="detail-body"></div>
 </div>
-
 <script>
-const DEFAULT_NAMES = ['귀털','목욕','블로어','드라이','귀청소','항문','생식기 털','배털','발','발재확인','닭발 정리'];
-
-let items = DEFAULT_NAMES.map(n => ({name:n, done:false, status:null, memo:'', _open:false}));
-let times = {start:{h:9,m:0}, end:{h:10,m:0}};
-let pickerCur = 'start';
-let pickerOpen = false;
-let dragSrcIdx = null;
-let records = [];
-let currentDetailIdx = null;
-let editMode = false;
-
+const DEFAULT_NAMES=['귀털','목욕','블로어','드라이','귀청소','항문','생식기 털','배털','발','발재확인','닭발 정리'];
+let items=DEFAULT_NAMES.map(n=>({name:n,done:false,status:null,memo:'',_open:false}));
+let times={start:{h:9,m:0},end:{h:10,m:0}};
+let pickerCur='start',pickerOpen=false,dragSrcIdx=null,records=[],currentDetailIdx=null,editMode=false;
 function pad(n){return String(n).padStart(2,'0');}
 function fmt(t){return pad(t.h)+':'+pad(t.m);}
 function today(){const d=new Date();return `${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())}`;}
 function memoCount(text){if(!text||!text.trim())return 0;return text.trim().split('\n').filter(l=>l.trim()).length;}
-
-// --- TIMER ---
-function togglePicker(type){
-  if(pickerOpen && pickerCur===type){closePicker();return;}
-  pickerCur=type; pickerOpen=true;
-  document.getElementById('picker-label').textContent = type==='start'?'시작 시간':'종료 시간';
-  document.getElementById('val-h').textContent = pad(times[type].h);
-  document.getElementById('val-m').textContent = pad(times[type].m);
-  document.getElementById('picker').classList.add('open');
-  document.getElementById('btn-start').classList.toggle('active',type==='start');
-  document.getElementById('btn-end').classList.toggle('active',type==='end');
-}
-function closePicker(){
-  pickerOpen=false;
-  document.getElementById('picker').classList.remove('open');
-  document.getElementById('btn-start').classList.remove('active');
-  document.getElementById('btn-end').classList.remove('active');
-}
-function adj(unit,dir){
-  if(unit==='h') times[pickerCur].h=(times[pickerCur].h+dir+24)%24;
-  else times[pickerCur].m=(times[pickerCur].m+dir+60)%60;
-  document.getElementById('val-h').textContent=pad(times[pickerCur].h);
-  document.getElementById('val-m').textContent=pad(times[pickerCur].m);
-}
-function confirmTime(){
-  document.getElementById('btn-start').textContent=fmt(times.start);
-  document.getElementById('btn-end').textContent=fmt(times.end);
-  closePicker();
-}
-
-// --- RENDER MAIN ---
+function togglePicker(type){if(pickerOpen&&pickerCur===type){closePicker();return;}pickerCur=type;pickerOpen=true;document.getElementById('picker-label').textContent=type==='start'?'시작 시간':'종료 시간';document.getElementById('val-h').textContent=pad(times[type].h);document.getElementById('val-m').textContent=pad(times[type].m);document.getElementById('picker').classList.add('open');document.getElementById('btn-start').classList.toggle('active',type==='start');document.getElementById('btn-end').classList.toggle('active',type==='end');}
+function closePicker(){pickerOpen=false;document.getElementById('picker').classList.remove('open');document.getElementById('btn-start').classList.remove('active');document.getElementById('btn-end').classList.remove('active');}
+function adj(unit,dir){if(unit==='h')times[pickerCur].h=(times[pickerCur].h+dir+24)%24;else times[pickerCur].m=(times[pickerCur].m+dir+60)%60;document.getElementById('val-h').textContent=pad(times[pickerCur].h);document.getElementById('val-m').textContent=pad(times[pickerCur].m);}
+function confirmTime(){document.getElementById('btn-start').textContent=fmt(times.start);document.getElementById('btn-end').textContent=fmt(times.end);closePicker();}
 function render(){
-  const list = document.getElementById('checklist');
-  list.innerHTML='';
+  const list=document.getElementById('checklist');list.innerHTML='';
   items.forEach((item,idx)=>{
-    const wrap = document.createElement('div');
-    wrap.className='item-wrap'+(item._open?' panel-open':'');
-
-    const cnt = memoCount(item.memo);
-    const row = document.createElement('div');
-    row.className='item';
-    row.draggable=true;
-    row.dataset.idx=idx;
-    row.innerHTML=`
-      <span class="drag-handle">⠿</span>
-      <span class="item-num">${idx+1}</span>
-      <div class="check-circle${item.done?' done':''}">
-        <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
-      </div>
-      <span class="item-name">${item.name}</span>
-      <div class="status-btns">
-        <button class="sb o${item.status==='o'?' sel':''}">○</button>
-        <button class="sb t${item.status==='t'?' sel':''}">△</button>
-        <button class="sb x${item.status==='x'?' sel':''}">✕</button>
-      </div>
-      <button class="memo-btn">
-        <svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="14" rx="2"/><line x1="7" y1="7" x2="13" y2="7"/><line x1="7" y1="10" x2="13" y2="10"/><line x1="7" y1="13" x2="10" y2="13"/></svg>
-        ${cnt>0?`<span class="memo-count">${cnt}</span>`:''}
-      </button>
-    `;
-
+    const wrap=document.createElement('div');wrap.className='item-wrap'+(item._open?' panel-open':'');
+    const cnt=memoCount(item.memo);
+    const row=document.createElement('div');row.className='item';row.draggable=true;row.dataset.idx=idx;
+    row.innerHTML=`<span class="drag-handle">⠿</span><span class="item-num">${idx+1}</span><div class="check-circle${item.done?' done':''}"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><span class="item-name">${item.name}</span><div class="status-btns"><button class="sb o${item.status==='o'?' sel':''}">○</button><button class="sb t${item.status==='t'?' sel':''}">△</button><button class="sb x${item.status==='x'?' sel':''}">✕</button></div><button class="memo-btn"><svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="14" rx="2"/><line x1="7" y1="7" x2="13" y2="7"/><line x1="7" y1="10" x2="13" y2="10"/><line x1="7" y1="13" x2="10" y2="13"/></svg>${cnt>0?`<span class="memo-count">${cnt}</span>`:''}</button>`;
     row.querySelector('.check-circle').addEventListener('click',()=>{items[idx].done=!items[idx].done;updateProgress();render();});
     const sbs=row.querySelectorAll('.sb');
     ['o','t','x'].forEach((s,i)=>sbs[i].addEventListener('click',()=>{items[idx].status=items[idx].status===s?null:s;render();}));
     row.querySelector('.memo-btn').addEventListener('click',e=>{e.stopPropagation();openMemo(idx);});
-
-    // drag desktop
     row.addEventListener('dragstart',()=>{dragSrcIdx=idx;setTimeout(()=>row.classList.add('dragging'),0);});
     row.addEventListener('dragend',()=>{row.classList.remove('dragging');document.querySelectorAll('.item').forEach(el=>el.classList.remove('drag-over'));});
     row.addEventListener('dragover',e=>{e.preventDefault();row.classList.add('drag-over');});
     row.addEventListener('dragleave',()=>row.classList.remove('drag-over'));
     row.addEventListener('drop',e=>{e.preventDefault();row.classList.remove('drag-over');if(dragSrcIdx!==null&&dragSrcIdx!==idx){const m=items.splice(dragSrcIdx,1)[0];items.splice(idx,0,m);dragSrcIdx=null;render();}});
-
-    // drag touch
-    let tStartY=0,tIdx=null;
-    row.addEventListener('touchstart',e=>{tStartY=e.touches[0].clientY;tIdx=idx;row.classList.add('dragging');},{passive:true});
-    row.addEventListener('touchmove',e=>{
-      e.preventDefault();
-      const els=document.elementsFromPoint(e.touches[0].clientX,e.touches[0].clientY);
-      const target=els.find(el=>el.classList.contains('item')&&el!==row);
-      document.querySelectorAll('.item').forEach(el=>el.classList.remove('drag-over'));
-      if(target)target.classList.add('drag-over');
-    },{passive:false});
-    row.addEventListener('touchend',e=>{
-      row.classList.remove('dragging');
-      const els=document.elementsFromPoint(e.changedTouches[0].clientX,e.changedTouches[0].clientY);
-      const target=els.find(el=>el.classList.contains('item')&&el!==row);
-      document.querySelectorAll('.item').forEach(el=>el.classList.remove('drag-over'));
-      if(target){const toIdx=+target.dataset.idx;const m=items.splice(tIdx,1)[0];items.splice(toIdx,0,m);}
-      tIdx=null;render();
-    });
-
-    // memo panel
-    const panel = document.createElement('div');
-    panel.className='memo-panel'+(item._open?' open':'');
+    let tIdx=null;
+    row.addEventListener('touchstart',e=>{tIdx=idx;row.classList.add('dragging');},{passive:true});
+    row.addEventListener('touchmove',e=>{e.preventDefault();const els=document.elementsFromPoint(e.touches[0].clientX,e.touches[0].clientY);const target=els.find(el=>el.classList.contains('item')&&el!==row);document.querySelectorAll('.item').forEach(el=>el.classList.remove('drag-over'));if(target)target.classList.add('drag-over');},{passive:false});
+    row.addEventListener('touchend',e=>{row.classList.remove('dragging');const els=document.elementsFromPoint(e.changedTouches[0].clientX,e.changedTouches[0].clientY);const target=els.find(el=>el.classList.contains('item')&&el!==row);document.querySelectorAll('.item').forEach(el=>el.classList.remove('drag-over'));if(target){const toIdx=+target.dataset.idx;const m=items.splice(tIdx,1)[0];items.splice(toIdx,0,m);}tIdx=null;render();});
+    const panel=document.createElement('div');panel.className='memo-panel'+(item._open?' open':'');
     const origMemo=item.memo||'';
-    const ta=document.createElement('textarea');
-    ta.placeholder='메모 입력...';
-    ta.value=item.memo||'';
+    const ta=document.createElement('textarea');ta.placeholder='메모 입력...';ta.value=item.memo||'';
     ta.addEventListener('input',e=>{items[idx].memo=e.target.value;});
-    const acts=document.createElement('div');
-    acts.className='memo-actions';
-    const doneBtn=document.createElement('button');
-    doneBtn.className='memo-done-btn';doneBtn.textContent='완료';
-    doneBtn.addEventListener('click',()=>closeMemo(idx));
-    const cancelBtn=document.createElement('button');
-    cancelBtn.className='memo-cancel-btn';cancelBtn.textContent='취소';
-    cancelBtn.addEventListener('click',()=>{items[idx].memo=origMemo;closeMemo(idx);});
-    acts.appendChild(doneBtn);acts.appendChild(cancelBtn);
-    panel.appendChild(ta);panel.appendChild(acts);
-    wrap.appendChild(row);wrap.appendChild(panel);
-    list.appendChild(wrap);
+    const acts=document.createElement('div');acts.className='memo-actions';
+    const doneBtn=document.createElement('button');doneBtn.className='memo-done-btn';doneBtn.textContent='완료';doneBtn.addEventListener('click',()=>closeMemo(idx));
+    const cancelBtn=document.createElement('button');cancelBtn.className='memo-cancel-btn';cancelBtn.textContent='취소';cancelBtn.addEventListener('click',()=>{items[idx].memo=origMemo;closeMemo(idx);});
+    acts.appendChild(doneBtn);acts.appendChild(cancelBtn);panel.appendChild(ta);panel.appendChild(acts);
+    wrap.appendChild(row);wrap.appendChild(panel);list.appendChild(wrap);
     if(item._open)setTimeout(()=>ta.focus(),50);
   });
   updateProgress();
 }
-
-function openMemo(idx){items.forEach((it,i)=>{if(i!==idx){it._open=false;}});items[idx]._open=!items[idx]._open;render();}
+function openMemo(idx){items.forEach((it,i)=>{if(i!==idx)it._open=false;});items[idx]._open=!items[idx]._open;render();}
 function closeMemo(idx){items[idx]._open=false;render();}
-function updateProgress(){
-  const done=items.filter(i=>i.done).length;
-  document.getElementById('prog-fill').style.width=(done/items.length*100)+'%';
-  document.getElementById('prog-text').textContent=`${done} / ${items.length} 완료`;
-}
-
-// --- SAVE ---
+function updateProgress(){const done=items.filter(i=>i.done).length;document.getElementById('prog-fill').style.width=(done/items.length*100)+'%';document.getElementById('prog-text').textContent=`${done} / ${items.length} 완료`;}
 function saveRecord(){
   const dogName=document.getElementById('dog-name').value.trim()||'이름없음';
   const dogBreed=document.getElementById('dog-breed').value.trim()||'';
   const healthMemo=document.getElementById('health-memo').value.trim();
   const dateStr=today();
   const sameDay=records.filter(r=>r.date===dateStr).length+1;
-  const record={
-    id: Date.now(),
-    date: dateStr,
-    seq: sameDay,
-    dogName, dogBreed, healthMemo,
-    timeStart: fmt(times.start),
-    timeEnd: fmt(times.end),
-    items: items.map(({_open,...rest})=>({...rest}))
-  };
-  records.unshift(record);
-  saveToStorage();
+  const record={id:Date.now(),date:dateStr,seq:sameDay,dogName,dogBreed,healthMemo,timeStart:fmt(times.start),timeEnd:fmt(times.end),items:items.map(({_open,...rest})=>({...rest}))};
+  records.unshift(record);saveToStorage();
   alert(`저장됐어요!\n${dateStr} - ${sameDay}번째 - ${dogName}`);
   resetMain();
 }
-
-function resetMain(){
-  items=DEFAULT_NAMES.map(n=>({name:n,done:false,status:null,memo:'',_open:false}));
-  times={start:{h:9,m:0},end:{h:10,m:0}};
-  document.getElementById('dog-name').value='';
-  document.getElementById('dog-breed').value='';
-  document.getElementById('health-memo').value='';
-  document.getElementById('btn-start').textContent='09:00';
-  document.getElementById('btn-end').textContent='10:00';
-  closePicker();
-  render();
-}
-
-// --- SCREENS ---
-function showMain(){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen-main').classList.add('active');
-  render();
-}
-function showList(){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen-list').classList.add('active');
-  renderList();
-}
-function showDetail(idx){
-  currentDetailIdx=idx;
-  editMode=false;
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen-detail').classList.add('active');
-  renderDetail();
-}
-
-// --- LIST ---
+function resetMain(){items=DEFAULT_NAMES.map(n=>({name:n,done:false,status:null,memo:'',_open:false}));times={start:{h:9,m:0},end:{h:10,m:0}};document.getElementById('dog-name').value='';document.getElementById('dog-breed').value='';document.getElementById('health-memo').value='';document.getElementById('btn-start').textContent='09:00';document.getElementById('btn-end').textContent='10:00';closePicker();render();}
+function showMain(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-main').classList.add('active');render();}
+function showList(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-list').classList.add('active');renderList();}
+function showDetail(idx){currentDetailIdx=idx;editMode=false;document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-detail').classList.add('active');renderDetail();}
 function renderList(){
   const body=document.getElementById('list-body');
   if(records.length===0){body.innerHTML='<div class="list-empty">저장된 기록이 없어요</div>';return;}
   body.innerHTML='';
   records.forEach((r,idx)=>{
     const done=r.items.filter(i=>i.done).length;
-    const card=document.createElement('div');
-    card.className='record-card';
-    card.innerHTML=`
-      <div class="record-top">
-        <div>
-          <div class="record-name">${r.dogName}${r.dogBreed?` · ${r.dogBreed}`:''}</div>
-          <div class="record-date">${r.date} · ${r.seq}번째</div>
-        </div>
-        <button class="record-del" data-idx="${idx}">🗑</button>
-      </div>
-      <div class="record-meta">
-        <span class="record-time">⏱ ${r.timeStart} ~ ${r.timeEnd}</span>
-        <span class="record-progress">✓ ${done}/${r.items.length}</span>
-      </div>
-    `;
+    const card=document.createElement('div');card.className='record-card';
+    card.innerHTML=`<div class="record-top"><div><div class="record-name">${r.dogName}${r.dogBreed?' · '+r.dogBreed:''}</div><div class="record-date">${r.date} · ${r.seq}번째</div></div><button class="record-del" data-idx="${idx}">🗑</button></div><div class="record-meta"><span class="record-time">⏱ ${r.timeStart} ~ ${r.timeEnd}</span><span class="record-progress">✓ ${done}/${r.items.length}</span></div>`;
     card.addEventListener('click',e=>{if(!e.target.classList.contains('record-del'))showDetail(idx);});
-    card.querySelector('.record-del').addEventListener('click',e=>{
-      e.stopPropagation();
-      if(confirm('이 기록을 삭제할까요?')){records.splice(idx,1);saveToStorage();renderList();}
-    });
+    card.querySelector('.record-del').addEventListener('click',e=>{e.stopPropagation();if(confirm('이 기록을 삭제할까요?')){records.splice(idx,1);saveToStorage();renderList();}});
     body.appendChild(card);
   });
 }
-
-// --- DETAIL ---
 function renderDetail(){
   const r=records[currentDetailIdx];
   document.getElementById('detail-title').textContent=`${r.date} · ${r.dogName}`;
   document.getElementById('edit-toggle').textContent=editMode?'완료':'수정';
-  const body=document.getElementById('detail-body');
-  body.innerHTML='';
-
-  // time
-  const timeDiv=document.createElement('div');
-  timeDiv.className='detail-section';
+  const body=document.getElementById('detail-body');body.innerHTML='';
+  const timeDiv=document.createElement('div');timeDiv.className='detail-section';
   timeDiv.innerHTML=`<div class="detail-label">작업 시간</div>`;
-  if(editMode){
-    timeDiv.innerHTML+=`<div style="display:flex;gap:8px;align-items:center;">
-      <input type="text" value="${r.timeStart}" id="d-time-start" style="flex:1;min-width:0;font-size:14px;height:36px;border-radius:10px;border:1px solid #e0e0e0;padding:0 10px;background:#f5f5f7;color:#1a1a1a;outline:none;">
-      <span style="color:#888">~</span>
-      <input type="text" value="${r.timeEnd}" id="d-time-end" style="flex:1;min-width:0;font-size:14px;height:36px;border-radius:10px;border:1px solid #e0e0e0;padding:0 10px;background:#f5f5f7;color:#1a1a1a;outline:none;">
-    </div>`;
-  } else {
-    timeDiv.innerHTML+=`<div class="detail-val">⏱ ${r.timeStart} ~ ${r.timeEnd}</div>`;
-  }
+  if(editMode){timeDiv.innerHTML+=`<div style="display:flex;gap:8px;align-items:center;"><input type="text" value="${r.timeStart}" id="d-time-start" style="flex:1;min-width:0;font-size:14px;height:36px;border-radius:10px;border:1px solid #e0e0e0;padding:0 10px;background:#f5f5f7;color:#1a1a1a;outline:none;"><span style="color:#888">~</span><input type="text" value="${r.timeEnd}" id="d-time-end" style="flex:1;min-width:0;font-size:14px;height:36px;border-radius:10px;border:1px solid #e0e0e0;padding:0 10px;background:#f5f5f7;color:#1a1a1a;outline:none;"></div>`;}
+  else{timeDiv.innerHTML+=`<div class="detail-val">⏱ ${r.timeStart} ~ ${r.timeEnd}</div>`;}
   body.appendChild(timeDiv);
-
-  // dog info
-  const dogDiv=document.createElement('div');
-  dogDiv.className='detail-section';
+  const dogDiv=document.createElement('div');dogDiv.className='detail-section';
   dogDiv.innerHTML=`<div class="detail-label">강아지 정보</div>`;
-  if(editMode){
-    dogDiv.innerHTML+=`<div style="display:flex;gap:8px;">
-      <input type="text" value="${r.dogName}" id="d-dog-name" placeholder="이름" style="flex:1;min-width:0;font-size:13px;height:36px;border-radius:10px;border:1px solid #e0e0e0;padding:0 10px;background:#f5f5f7;color:#1a1a1a;outline:none;">
-      <input type="text" value="${r.dogBreed}" id="d-dog-breed" placeholder="견종" style="flex:1;min-width:0;font-size:13px;height:36px;border-radius:10px;border:1px solid #e0e0e0;padding:0 10px;background:#f5f5f7;color:#1a1a1a;outline:none;">
-    </div>`;
-  } else {
-    dogDiv.innerHTML+=`<div class="detail-val">${r.dogName}${r.dogBreed?` · ${r.dogBreed}`:''}</div>`;
-  }
+  if(editMode){dogDiv.innerHTML+=`<div style="display:flex;gap:8px;"><input type="text" value="${r.dogName}" id="d-dog-name" style="flex:1;min-width:0;font-size:13px;height:36px;border-radius:10px;border:1px solid #e0e0e0;padding:0 10px;background:#f5f5f7;color:#1a1a1a;outline:none;"><input type="text" value="${r.dogBreed}" id="d-dog-breed" style="flex:1;min-width:0;font-size:13px;height:36px;border-radius:10px;border:1px solid #e0e0e0;padding:0 10px;background:#f5f5f7;color:#1a1a1a;outline:none;"></div>`;}
+  else{dogDiv.innerHTML+=`<div class="detail-val">${r.dogName}${r.dogBreed?' · '+r.dogBreed:''}</div>`;}
   body.appendChild(dogDiv);
-
-  // health memo
   if(r.healthMemo||editMode){
-    const hDiv=document.createElement('div');
-    hDiv.className='detail-section';
+    const hDiv=document.createElement('div');hDiv.className='detail-section';
     hDiv.innerHTML=`<div class="detail-label">건강 상태 메모</div>`;
-    if(editMode){
-      hDiv.innerHTML+=`<textarea id="d-health" style="width:100%;font-size:13px;padding:8px 10px;border:1px solid #e0e0e0;border-radius:10px;background:#f5f5f7;color:#1a1a1a;resize:none;height:60px;font-family:inherit;outline:none;">${r.healthMemo}</textarea>`;
-    } else {
-      hDiv.innerHTML+=`<div class="detail-val">${r.healthMemo||'-'}</div>`;
-    }
+    if(editMode){hDiv.innerHTML+=`<textarea id="d-health" style="width:100%;font-size:13px;padding:8px 10px;border:1px solid #e0e0e0;border-radius:10px;background:#f5f5f7;color:#1a1a1a;resize:none;height:60px;font-family:inherit;outline:none;">${r.healthMemo}</textarea>`;}
+    else{hDiv.innerHTML+=`<div class="detail-val">${r.healthMemo||'-'}</div>`;}
     body.appendChild(hDiv);
   }
-
-  // items
-  const itemsDiv=document.createElement('div');
-  itemsDiv.className='detail-section';
+  const itemsDiv=document.createElement('div');itemsDiv.className='detail-section';
   itemsDiv.innerHTML=`<div class="detail-label">미용 순서</div>`;
   r.items.forEach((item,i)=>{
-    const row=document.createElement('div');
-    row.className='detail-item';
+    const row=document.createElement('div');row.className='detail-item';
     if(editMode){
-      row.innerHTML=`
-        <span class="detail-item-num">${i+1}</span>
-        <div class="detail-check${item.done?' done':''}" data-i="${i}">
-          <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
-        </div>
-        <span class="detail-item-name">${item.name}</span>
-        <div style="display:flex;gap:3px;">
-          <button class="sb o${item.status==='o'?' sel':''}" data-i="${i}" data-s="o">○</button>
-          <button class="sb t${item.status==='t'?' sel':''}" data-i="${i}" data-s="t">△</button>
-          <button class="sb x${item.status==='x'?' sel':''}" data-i="${i}" data-s="x">✕</button>
-        </div>
-      `;
-      row.querySelector('.detail-check').addEventListener('click',()=>{
-        records[currentDetailIdx].items[i].done=!records[currentDetailIdx].items[i].done;
-        renderDetail();
-      });
-      row.querySelectorAll('.sb').forEach(btn=>{
-        btn.addEventListener('click',()=>{
-          const s=btn.dataset.s;
-          records[currentDetailIdx].items[i].status=records[currentDetailIdx].items[i].status===s?null:s;
-          renderDetail();
-        });
-      });
+      row.innerHTML=`<span class="detail-item-num">${i+1}</span><div class="detail-check${item.done?' done':''}" data-i="${i}"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><span class="detail-item-name">${item.name}</span><div style="display:flex;gap:3px;"><button class="sb o${item.status==='o'?' sel':''}" data-s="o">○</button><button class="sb t${item.status==='t'?' sel':''}" data-s="t">△</button><button class="sb x${item.status==='x'?' sel':''}" data-s="x">✕</button></div>`;
+      row.querySelector('.detail-check').addEventListener('click',()=>{records[currentDetailIdx].items[i].done=!records[currentDetailIdx].items[i].done;renderDetail();});
+      row.querySelectorAll('.sb').forEach(btn=>btn.addEventListener('click',()=>{const s=btn.dataset.s;records[currentDetailIdx].items[i].status=records[currentDetailIdx].items[i].status===s?null:s;renderDetail();}));
     } else {
-      const sClass=item.status||'';
-      const sText=item.status==='o'?'○':item.status==='t'?'△':item.status==='x'?'✕':'';
-      row.innerHTML=`
-        <span class="detail-item-num">${i+1}</span>
-        <div class="detail-check${item.done?' done':''}">
-          <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
-        </div>
-        <span class="detail-item-name">${item.name}</span>
-        ${sText?`<div class="detail-status ${sClass}">${sText}</div>`:'<div class="detail-status"></div>'}
-      `;
+      const sClass=item.status||'';const sText=item.status==='o'?'○':item.status==='t'?'△':item.status==='x'?'✕':'';
+      row.innerHTML=`<span class="detail-item-num">${i+1}</span><div class="detail-check${item.done?' done':''}"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><span class="detail-item-name">${item.name}</span>${sText?`<div class="detail-status ${sClass}">${sText}</div>`:'<div class="detail-status"></div>'}`;
     }
     itemsDiv.appendChild(row);
-    if(item.memo){
-      const mDiv=document.createElement('div');
-      mDiv.className='detail-memo-text';
-      mDiv.textContent='📝 '+item.memo;
-      itemsDiv.appendChild(mDiv);
-    }
+    if(item.memo){const mDiv=document.createElement('div');mDiv.className='detail-memo-text';mDiv.textContent='📝 '+item.memo;itemsDiv.appendChild(mDiv);}
   });
   body.appendChild(itemsDiv);
-
-  if(editMode){
-    const saveBtn=document.createElement('button');
-    saveBtn.className='detail-save-btn';
-    saveBtn.textContent='수정 저장';
-    saveBtn.addEventListener('click',saveDetail);
-    body.appendChild(saveBtn);
-  }
+  if(editMode){const saveBtn=document.createElement('button');saveBtn.className='detail-save-btn';saveBtn.textContent='수정 저장';saveBtn.addEventListener('click',saveDetail);body.appendChild(saveBtn);}
 }
-
-function toggleEdit(){
-  if(editMode){saveDetail();}
-  else{editMode=true;renderDetail();}
-}
-
+function toggleEdit(){if(editMode){saveDetail();}else{editMode=true;renderDetail();}}
 function saveDetail(){
   const r=records[currentDetailIdx];
-  const ts=document.getElementById('d-time-start');
-  const te=document.getElementById('d-time-end');
-  const dn=document.getElementById('d-dog-name');
-  const db=document.getElementById('d-dog-breed');
-  const hm=document.getElementById('d-health');
-  if(ts)r.timeStart=ts.value;
-  if(te)r.timeEnd=te.value;
-  if(dn)r.dogName=dn.value;
-  if(db)r.dogBreed=db.value;
-  if(hm)r.healthMemo=hm.value;
-  saveToStorage();
-  editMode=false;
-  renderDetail();
+  const ts=document.getElementById('d-time-start');const te=document.getElementById('d-time-end');
+  const dn=document.getElementById('d-dog-name');const db=document.getElementById('d-dog-breed');const hm=document.getElementById('d-health');
+  if(ts)r.timeStart=ts.value;if(te)r.timeEnd=te.value;if(dn)r.dogName=dn.value;if(db)r.dogBreed=db.value;if(hm)r.healthMemo=hm.value;
+  saveToStorage();editMode=false;renderDetail();
 }
-
-// --- STORAGE ---
-function saveToStorage(){
-  try{localStorage.setItem('grooming_records',JSON.stringify(records));}catch(e){}
-}
-function loadFromStorage(){
-  try{
-    const d=localStorage.getItem('grooming_records');
-    if(d)records=JSON.parse(d);
-  }catch(e){}
-}
-
-loadFromStorage();
-render();
+function saveToStorage(){try{localStorage.setItem('grooming_records',JSON.stringify(records));}catch(e){}}
+function loadFromStorage(){try{const d=localStorage.getItem('grooming_records');if(d)records=JSON.parse(d);}catch(e){}}
+loadFromStorage();render();
 </script>
 </body>
 </html>
