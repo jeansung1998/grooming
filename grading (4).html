@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="theme-color" content="#1a1f36"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="DCL 그레이딩"/>
+<title>DCL 자동 그레이딩 계산표</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{overflow-x:hidden;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans KR',sans-serif;background:#f8f8f8;color:#111;overflow-x:hidden;width:100%;}
+.wrap{max-width:900px;margin:0 auto;padding:1rem;}
+header{background:#1a1f36;color:#fff;padding:14px 16px;text-align:center;position:sticky;top:0;z-index:100;}
+header h1{font-size:15px;font-weight:700;letter-spacing:2px;}
+header p{font-size:11px;color:rgba(255,255,255,0.6);margin-top:2px;}
+.install-bar{background:#4361ee;color:#fff;padding:10px 16px;display:none;align-items:center;justify-content:space-between;gap:10px;}
+.install-bar p{font-size:13px;}
+.btn-install{padding:6px 16px;background:#fff;color:#4361ee;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;}
+.card{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid #eee;}
+.card-title{font-size:13px;font-weight:700;margin-bottom:10px;color:#111;}
+.unit-toggle{display:flex;gap:8px;margin-bottom:12px;}
+.unit-btn{flex:1;padding:10px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;border:2px solid #ddd;background:#fff;color:#999;transition:all 0.2s;text-align:center;}
+.unit-btn.on{background:#111;color:#fff;border-color:#111;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.grid4{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px;}
+@media(min-width:600px){.grid4{grid-template-columns:repeat(4,1fr);}}
+.field label{font-size:11px;color:#888;display:block;margin-bottom:4px;}
+.field label .tag{color:#4361ee;font-weight:700;}
+.field input,.field select{width:100%;padding:8px 10px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;background:#fff;color:#111;}
+.field input:focus,.field select:focus{outline:none;border-color:#4361ee;}
+.grade-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px;}
+.grade-btn{flex:1;padding:10px 8px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:2px solid #ddd;background:#fff;color:#999;transition:all 0.2s;text-align:center;}
+.grade-btn.on{background:#4361ee;color:#fff;border-color:#4361ee;}
+.size-section{margin-bottom:12px;}
+.size-label{font-size:12px;color:#888;margin-bottom:6px;}
+.size-tabs{display:flex;gap:6px;margin-bottom:8px;}
+.stab{padding:5px 14px;border-radius:20px;font-size:12px;cursor:pointer;border:1px solid #ddd;background:#fff;color:#888;font-weight:500;}
+.stab.on{background:#111;color:#fff;border-color:#111;}
+.sizes{display:flex;flex-wrap:wrap;gap:6px;}
+.size-chip{padding:6px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;cursor:pointer;background:#fff;color:#555;font-weight:500;}
+.size-chip.on{background:#e8f0ff;border-color:#4361ee;color:#1a1f36;font-weight:700;}
+.btn-gen{width:100%;padding:14px;background:#1a1f36;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;}
+.btn-gen:disabled{background:#eee;color:#aaa;cursor:not-allowed;}
+.hint{font-size:11px;color:#e63946;text-align:center;margin-top:6px;}
+.legend{font-size:11px;color:#4361ee;margin-bottom:10px;background:#f0f4ff;padding:8px 10px;border-radius:6px;}
+.result-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.result-header h3{font-size:14px;font-weight:700;}
+.badge{font-size:11px;background:#e8f0ff;color:#1a1f36;padding:3px 10px;border-radius:20px;font-weight:600;}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:400px;}
+th{background:#1a1f36;color:#fff;padding:9px 10px;text-align:center;white-space:nowrap;font-size:12px;}
+th.base{background:#4361ee;}
+td{padding:8px 10px;text-align:center;border-bottom:1px solid #eee;font-size:12px;}
+td.part{text-align:left;font-weight:600;color:#555;background:#f8f8f8;white-space:nowrap;}
+td.bval{background:#e8f0ff;font-weight:700;color:#1a1f36;}
+.btns-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+.btn-reset{padding:10px 16px;border:1.5px solid #ddd;background:transparent;border-radius:8px;font-size:13px;cursor:pointer;color:#888;}
+.btn-export{padding:10px 16px;border:1.5px solid #111;background:transparent;border-radius:8px;font-size:13px;cursor:pointer;color:#111;font-weight:600;}
+.btn-copy{padding:10px 16px;border:1.5px solid #4361ee;background:transparent;border-radius:8px;font-size:13px;cursor:pointer;color:#4361ee;font-weight:600;transition:all 0.2s;}
+.btn-copy.copied{background:#4361ee;color:#fff;}
+.product-input{width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;background:#fff;color:#111;}
+.product-input:focus{outline:none;border-color:#4361ee;}
+.btn-img{padding:10px 16px;border:1.5px solid #06d6a0;background:transparent;border-radius:8px;font-size:13px;cursor:pointer;color:#06d6a0;font-weight:600;transition:all 0.2s;}
+.btn-img:active{background:#06d6a0;color:#fff;}
+.btn-imgcopy{padding:10px 16px;border:1.5px solid #f72585;background:transparent;border-radius:8px;font-size:13px;cursor:pointer;color:#f72585;font-weight:600;transition:all 0.2s;}
+.btn-imgcopy.copied{background:#f72585;color:#fff;}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+<header>
+  <h1>DCL GRADING</h1>
+  <p>자동 그레이딩 계산표</p>
+</header>
+
+<div class="install-bar" id="installBar">
+  <p>📱 홈화면에 앱으로 설치!</p>
+  <button class="btn-install" id="installBtn" onclick="installApp()">설치하기</button>
+</div>
+
+<div class="wrap">
+
+  <div class="card">
+    <div class="card-title">① 상품명</div>
+    <input class="product-input" id="productName" type="text" placeholder="상품명을 입력해주세요"/>
+  </div>
+
+  <div class="card">
+    <div class="card-title">② 단위 선택</div>
+    <div class="unit-toggle">
+      <button class="unit-btn on" onclick="setUnit('cm',this)">cm</button>
+      <button class="unit-btn" onclick="setUnit('inch',this)">inch</button>
+    </div>
+
+    <div class="card-title">③ 샘플 기준 사이즈 & 허리 편차</div>
+    <div class="grid2">
+      <div class="field">
+        <label>기준 사이즈</label>
+        <select id="baseSize" onchange="checkReady()">
+          <option value="">선택하세요</option>
+          <optgroup label="프리사이즈"><option>FREE</option></optgroup>
+          <optgroup label="알파벳 사이즈">
+            <option>XS</option><option>S</option><option>M</option><option>L</option>
+            <option>XL</option><option>XXL</option><option>XXXL</option>
+          </optgroup>
+          <optgroup label="숫자 사이즈">
+            <option>25</option><option>26</option><option>27</option><option>28</option>
+            <option>29</option><option>30</option><option>31</option><option>32</option>
+            <option>33</option><option>34</option><option>35</option><option>36</option>
+            <option>37</option><option>38</option><option>39</option><option>40</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="field">
+        <label id="grade-label">허리 1단계 편차 (cm)</label>
+        <div class="grade-btns" id="grade-btns"></div>
+      </div>
+    </div>
+
+    <div class="card-title">④ 기준 사이즈 스펙 입력</div>
+    <div class="legend">💡 단면 항목은 단면(반폭) 치수로 입력하세요</div>
+    <div class="grid4">
+      <div class="field"><label>허리 Waist <span class="tag">(단면)</span></label><input id="waist" type="number" step="0.1" inputmode="decimal" oninput="checkReady()"/></div>
+      <div class="field"><label>힙 Hip <span class="tag">(단면)</span></label><input id="hip" type="number" step="0.1" inputmode="decimal" oninput="checkReady()"/></div>
+      <div class="field"><label>허벅지 Thigh <span class="tag">(단면)</span></label><input id="thigh" type="number" step="0.1" inputmode="decimal" oninput="checkReady()"/></div>
+      <div class="field"><label>무릎 Knee <span class="tag">(단면)</span></label><input id="knee" type="number" step="0.1" inputmode="decimal" oninput="checkReady()"/></div>
+      <div class="field"><label>앞밑위 Front Rise</label><input id="frise" type="number" step="0.1" inputmode="decimal" oninput="checkReady()"/></div>
+      <div class="field"><label>뒷밑위 Back Rise</label><input id="brise" type="number" step="0.1" inputmode="decimal" oninput="checkReady()"/></div>
+      <div class="field"><label>밑단 Hem <span class="tag">(단면)</span></label><input id="hem" type="number" step="0.1" inputmode="decimal" oninput="checkReady()"/></div>
+      <div class="field"><label>인심 Inseam</label><input id="inseam" type="number" step="0.1" inputmode="decimal" oninput="checkReady()"/></div>
+      <div class="field"><label>총장 Total Length</label><input id="total" type="number" step="0.1" inputmode="decimal" oninput="checkReady()"/></div>
+    </div>
+
+    <div class="size-section">
+      <div class="size-label">⑤ 그레이딩할 사이즈 선택</div>
+      <div class="size-tabs">
+        <button class="stab on" onclick="setSizeTab('alpha',this)">알파벳</button>
+        <button class="stab" onclick="setSizeTab('num',this)">숫자</button>
+      </div>
+      <div class="sizes" id="sizes"></div>
+    </div>
+
+    <button class="btn-gen" id="genBtn" onclick="generate()" disabled>자동 그레이딩 계산표 생성 →</button>
+    <div class="hint" id="hint">기준 사이즈, 허리 스펙, 사이즈를 선택해주세요</div>
+  </div>
+
+  <div class="card" id="result" style="display:none;">
+    <div class="result-header">
+      <h3 id="result-title">자동 그레이딩 계산표</h3>
+      <span class="badge" id="unit-badge">cm 기준</span>
+    </div>
+    <div class="tbl-wrap"><table id="gtable"></table></div>
+    <div class="btns-row" id="action-btns">
+      <button class="btn-reset" onclick="reset()">↺ 다시 계산</button>
+      <button class="btn-export" onclick="exportCSV()">CSV</button>
+      <button class="btn-copy" id="copyBtn" onclick="copyTable()">📋 텍스트 복사</button>
+      <button class="btn-img" onclick="saveImage()">🖼️ 이미지 저장</button>
+      <button class="btn-imgcopy" id="imgCopyBtn" onclick="copyImage()">📸 이미지 복사</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const ALPHA=['FREE','XS','S','M','L','XL','XXL','XXXL'];
+const NUM=['FREE','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40'];
+const FIELDS=[
+  {id:'waist', label:'허리 Waist (단면)',   ratio:1.0,  half:true},
+  {id:'hip',   label:'힙 Hip (단면)',       ratio:1.0,  half:true},
+  {id:'thigh', label:'허벅지 Thigh (단면)', ratio:0.5,  half:true},
+  {id:'knee',  label:'무릎 Knee (단면)',    ratio:0.5,  half:true},
+  {id:'frise', label:'앞밑위 Front Rise',   ratio:0.25, half:false},
+  {id:'brise', label:'뒷밑위 Back Rise',    ratio:0.25, half:false},
+  {id:'hem',   label:'밑단 Hem (단면)',     ratio:0.5,  half:true},
+  {id:'inseam',label:'인심 Inseam',         ratio:0,    half:false},
+  {id:'total', label:'총장 Total Length',   ratio:0.25, half:false},
+];
+const GRADES={
+  cm:  [{label:'2.5cm',val:2.5},{label:'3.8cm',val:3.8,def:true},{label:'5.1cm',val:5.1}],
+  inch:[{label:'1"',val:1},{label:'1.5"',val:1.5,def:true},{label:'2"',val:2}]
+};
+let unit='cm',sizeTab='alpha',selected=new Set(),gradeVal=3.8,deferredPrompt=null;
+
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();deferredPrompt=e;
+  document.getElementById('installBar').style.display='flex';
+});
+function installApp(){
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(()=>{deferredPrompt=null;document.getElementById('installBar').style.display='none';});
+  } else {
+    alert('설치 방법\n\n📱 iPhone/iPad:\nSafari → 공유버튼 → "홈 화면에 추가"\n\n🤖 Android:\nChrome 메뉴 → "홈 화면에 추가"');
+  }
+}
+
+function setUnit(u,btn){
+  unit=u;
+  document.querySelectorAll('.unit-btn').forEach(b=>{b.classList.remove('on');b.style.cssText='';});
+  btn.classList.add('on');btn.style.background='#111';btn.style.color='#fff';btn.style.borderColor='#111';
+  gradeVal=GRADES[u].find(g=>g.def).val;
+  document.getElementById('grade-label').textContent=`허리 1단계 편차 (${u})`;
+  renderGrades();checkReady();
+}
+function renderGrades(){
+  document.getElementById('grade-btns').innerHTML=GRADES[unit].map(g=>`
+    <button class="grade-btn ${g.val===gradeVal?'on':''}" onclick="setGrade(${g.val},this)"
+      style="${g.val===gradeVal?'background:#4361ee;color:#fff;border-color:#4361ee;':''}"
+    >${g.label}</button>`).join('');
+}
+function setGrade(v,btn){
+  gradeVal=v;
+  document.querySelectorAll('.grade-btn').forEach(b=>{b.classList.remove('on');b.style.cssText='';});
+  btn.classList.add('on');btn.style.background='#4361ee';btn.style.color='#fff';btn.style.borderColor='#4361ee';
+  checkReady();
+}
+function setSizeTab(tab,btn){
+  sizeTab=tab;selected.clear();
+  document.querySelectorAll('.stab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');renderSizes();checkReady();
+}
+function renderSizes(){
+  const arr=sizeTab==='alpha'?ALPHA:NUM;
+  document.getElementById('sizes').innerHTML=arr.map(s=>`
+    <div class="size-chip ${selected.has(s)?'on':''}" onclick="toggleSize('${s}',this)">${s}</div>`).join('');
+}
+function toggleSize(s,el){
+  if(selected.has(s)){selected.delete(s);el.classList.remove('on');}
+  else{selected.add(s);el.classList.add('on');}
+  checkReady();
+}
+function checkReady(){
+  const ok=document.getElementById('baseSize').value!==''&&document.getElementById('waist').value!==''&&gradeVal&&selected.size>0;
+  document.getElementById('genBtn').disabled=!ok;
+  document.getElementById('hint').style.display=ok?'none':'block';
+}
+function generate(){
+  const baseSize=document.getElementById('baseSize').value;
+  const productName=document.getElementById('productName').value;
+  const arr=sizeTab==='alpha'?ALPHA:NUM;
+  const sizes=arr.filter(s=>selected.has(s));
+  const baseSizeIdx=sizes.indexOf(baseSize);
+  const activeFields=FIELDS.filter(f=>document.getElementById(f.id).value!=='');
+  document.getElementById('result-title').textContent=productName?`${productName} — 그레이딩 계산표`:'자동 그레이딩 계산표';
+  let html='<thead><tr><th>부위</th>';
+  sizes.forEach(s=>{html+=s===baseSize?`<th class="base">${s}</th>`:`<th>${s}</th>`;});
+  html+='</tr></thead><tbody>';
+  activeFields.forEach(f=>{
+    const baseVal=parseFloat(document.getElementById(f.id).value);
+    html+=`<tr><td class="part">${f.label}</td>`;
+    sizes.forEach((s,si)=>{
+      const steps=si-baseSizeIdx;
+      const effectiveRatio=f.half?f.ratio/2:f.ratio;
+      const val=(baseVal+steps*gradeVal*effectiveRatio).toFixed(1);
+      html+=s===baseSize?`<td class="bval">${val}</td>`:`<td>${val}</td>`;
+    });
+    html+='</tr>';
+  });
+  html+='</tbody>';
+  document.getElementById('gtable').innerHTML=html;
+  document.getElementById('unit-badge').textContent=unit+' 기준';
+  document.getElementById('result').style.display='block';
+  document.getElementById('result').scrollIntoView({behavior:'smooth'});
+}
+function reset(){document.getElementById('result').style.display='none';}
+function exportCSV(){
+  const table=document.getElementById('gtable');
+  let csv='';
+  for(const row of table.rows){
+    const cols=[];
+    for(const cell of row.cells)cols.push('"'+cell.textContent.trim()+'"');
+    csv+=cols.join(',')+'\n';
+  }
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='DCL_grading.csv';a.click();
+}
+function copyTable(){
+  const table=document.getElementById('gtable');
+  const rows=table.rows;
+  // 헤더 사이즈 추출
+  const sizes=[];
+  for(let i=1;i<rows[0].cells.length;i++) sizes.push(rows[0].cells[i].textContent.trim());
+  
+  // 첫줄: 단위 + 사이즈
+  let text=unit.toUpperCase()+'           '+sizes.join(' / ')+'\n';
+  
+  // 각 부위별
+  for(let i=1;i<rows.length;i++){
+    const cells=rows[i].cells;
+    const partName=cells[0].textContent.trim();
+    const vals=[];
+    for(let j=1;j<cells.length;j++) vals.push(cells[j].textContent.trim());
+    text+=partName+'   '+vals.join(' / ')+'\n';
+  }
+  
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=document.getElementById('copyBtn');
+    btn.textContent='✅ 복사됨!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='📋 텍스트 복사';btn.classList.remove('copied');},2000);
+  });
+}
+
+function saveImage(){
+  const btns=document.getElementById('action-btns');
+  btns.style.display='none';
+  const el=document.getElementById('result');
+  html2canvas(el,{backgroundColor:'#ffffff',scale:2}).then(canvas=>{
+    btns.style.display='flex';
+    const a=document.createElement('a');
+    a.href=canvas.toDataURL('image/png');
+    const name=document.getElementById('productName').value||'DCL_grading';
+    a.download=name+'_grading.png';
+    a.click();
+  });
+}
+function copyImage(){
+  const btns=document.getElementById('action-btns');
+  btns.style.display='none';
+  const el=document.getElementById('result');
+  html2canvas(el,{backgroundColor:'#ffffff',scale:2}).then(canvas=>{
+    btns.style.display='flex';
+    canvas.toBlob(blob=>{
+      try{
+        navigator.clipboard.write([new ClipboardItem({'image/png':blob})]).then(()=>{
+          const btn=document.getElementById('imgCopyBtn');
+          btn.textContent='✅ 복사됨!';btn.classList.add('copied');
+          setTimeout(()=>{btn.textContent='📸 이미지 복사';btn.classList.remove('copied');},2000);
+        });
+      } catch(e){
+        alert('이미지 복사는 Chrome에서만 지원됩니다.\n이미지 저장 후 붙여넣기 해주세요.');
+      }
+    });
+  });
+}
+
+// 초기화
+document.querySelector('.unit-btn').style.background='#111';
+document.querySelector('.unit-btn').style.color='#fff';
+document.querySelector('.unit-btn').style.borderColor='#111';
+renderGrades();renderSizes();checkReady();
+</script>
+</body>
+</html>
